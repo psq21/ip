@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 public class Jukebox {
+    private static String[] tasks = new String[100];
+    private static int taskNo = 0;
+
     public static void main(String[] args) {
         String chatbotName = "jukebox";
         Scanner sc = new Scanner(System.in);
@@ -19,8 +22,14 @@ public class Jukebox {
 
     private static void echo(Scanner sc) {
         String inp = sc.nextLine();
+        tasks[taskNo] = inp;
+        taskNo++;
         if (inp.equals("bye")) {
             Jukebox.exit();
+        } else if (inp.equals("list")) {
+            for (int i = 0; i < taskNo; i++) {
+                System.out.println(String.format("%d. %s", i + 1, tasks[i]));
+            }
         } else {
             System.out.println(inp);
         }
