@@ -26,7 +26,7 @@ public class Jukebox {
     public static void main(String[] args) {
         String chatbotName = "jukebox";
         Scanner sc = new Scanner(System.in);
-        // Personality: weirdo
+        // Personality: uwu
         String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
         while (true) {
