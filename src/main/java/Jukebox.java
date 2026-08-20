@@ -8,7 +8,8 @@ import java.util.regex.Pattern;
 import java.util.Scanner;
 
 public class Jukebox {
-    private static Task[] tasks = new Task[100];
+    private static int taskLimit = 100;
+    private static Task[] tasks = new Task[taskLimit];
     private static int taskNo = 0;
 
     // todo {details}
@@ -27,7 +28,7 @@ public class Jukebox {
         String chatbotName = "jukebox";
         Scanner sc = new Scanner(System.in);
         // Personality: weirdo
-        String greeting = String.format("Hoi hoi im %s nice to meet you whaddya need", chatbotName);
+        String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
         while (true) {
             echo(sc);
@@ -41,7 +42,7 @@ public class Jukebox {
     }
 
     private static void exit() {
-        System.out.println("gooooooooddbyyeee seeeeee youuuuuuuu");
+        System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu");
         System.exit(0);
     }
 
@@ -58,8 +59,13 @@ public class Jukebox {
             s.next();
             if (s.hasNextInt()) {
                 int idx = s.nextInt();
+                if (idx > taskLimit || idx < 0 || idx > taskNo) {
+                    System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
+                }
                 tasks[idx].markDone();
                 System.out.println(String.format("marked item %d :D", idx));
+            } else {
+                System.out.println("pls gib task no. for me to mark uwu uwu");
             }
         } else if (inp.startsWith("unmark")) {
             Scanner s = new Scanner(inp);
@@ -74,10 +80,10 @@ public class Jukebox {
                 String details = todoMatcher.group(1);
                 Task newTask = new ToDo(details);
                 addToTasks(newTask);
-                System.out.println(String.format("i added the task %s !! you have %d tasks to go!!",
+                System.out.println(String.format("watashi added the task %s !! anata have %d tasks to go!!",
                         newTask, taskNo));
             } else {
-                System.out.println("you gotta give me something to work with !!!");
+                System.out.println("gib me something to work with !!! :(((");
             }
         } else if (inp.startsWith("deadline")) {
             Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
@@ -88,7 +94,7 @@ public class Jukebox {
                 addToTasks(newTask);
                 System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
             } else {
-                System.out.println("no pls give me the details and the deadline");
+                System.out.println("no pls gib the details and the deadline");
             }
         } else if (inp.startsWith("event")) {
             Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
@@ -98,12 +104,12 @@ public class Jukebox {
                 String to = eventMatcher.group(3);
                 Task newTask = new Event(details, from, to);
                 addToTasks(newTask);
-                System.out.println(String.format("yeah boi event %s added", newTask));
+                System.out.println(String.format("yeeeeees event %s added", newTask));
             } else {
-                System.out.println("nu !!!! gimme the dets the from the to");
+                System.out.println("nu !!!! gimme the deets the from the to");
             }
         } else {
-            System.out.println("no idea what you talkin about man talk again");
+            System.out.println("eeek?? nani ??/");
         }
     }
 }
