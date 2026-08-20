@@ -68,31 +68,40 @@ public class Jukebox {
                 int idx = s.nextInt();
                 tasks[idx].unmarkDone();
             }
-        } else if (TODO_PATTERN.matcher(inp).matches()) {
+        } else if (inp.startsWith("todo")) {
             Matcher todoMatcher = TODO_PATTERN.matcher(inp);
-            todoMatcher.matches();
-            String details = todoMatcher.group(1);
-            Task newTask = new ToDo(details);
-            addToTasks(newTask);
-            System.out.println(String.format("i added the task %s !! you have %d tasks to go!!",
-                    newTask, taskNo));
-        } else if (DEADLINE_PATTERN.matcher(inp).matches()) {
+            if (todoMatcher.matches()) {
+                String details = todoMatcher.group(1);
+                Task newTask = new ToDo(details);
+                addToTasks(newTask);
+                System.out.println(String.format("i added the task %s !! you have %d tasks to go!!",
+                        newTask, taskNo));
+            } else {
+                System.out.println("you gotta give me something to work with !!!");
+            }
+        } else if (inp.startsWith("deadline")) {
             Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
-            deadlineMatcher.matches();
-            String details = deadlineMatcher.group(1);
-            String by = deadlineMatcher.group(2);
-            Task newTask = new Deadline(details, by);
-            addToTasks(newTask);
-            System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
-        } else if (EVENT_PATTERN.matcher(inp).matches()) {
+            if (deadlineMatcher.matches()) {
+                String details = deadlineMatcher.group(1);
+                String by = deadlineMatcher.group(2);
+                Task newTask = new Deadline(details, by);
+                addToTasks(newTask);
+                System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
+            } else {
+                System.out.println("no pls give me the details and the deadline");
+            }
+        } else if (inp.startsWith("event")) {
             Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
-            eventMatcher.matches();
-            String details = eventMatcher.group(1);
-            String from = eventMatcher.group(2);
-            String to = eventMatcher.group(3);
-            Task newTask = new Event(details, from, to);
-            addToTasks(newTask);
-            System.out.println(String.format("yeah boi event %s added", newTask));
+            if (eventMatcher.matches()) {
+                String details = eventMatcher.group(1);
+                String from = eventMatcher.group(2);
+                String to = eventMatcher.group(3);
+                Task newTask = new Event(details, from, to);
+                addToTasks(newTask);
+                System.out.println(String.format("yeah boi event %s added", newTask));
+            } else {
+                System.out.println("nu !!!! gimme the dets the from the to");
+            }
         } else {
             System.out.println("no idea what you talkin about man talk again");
         }
