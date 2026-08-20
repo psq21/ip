@@ -4,13 +4,12 @@ import classes.ToDo;
 import classes.Event;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.ArrayList;
 
 import java.util.Scanner;
 
 public class Jukebox {
-    private static int taskLimit = 100;
-    private static Task[] tasks = new Task[taskLimit];
-    private static int taskNo = 0;
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     // todo {details}
     private static final Pattern TODO_PATTERN =
@@ -35,14 +34,12 @@ public class Jukebox {
         }
     }
 
-    private static int addToTasks(Task task) {
-        tasks[taskNo] = task;
-        taskNo++;
-        return taskNo;
+    private static void addToTasks(Task task) {
+        tasks.add(task);
     }
 
     private static void exit() {
-        System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu");
+        System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu <3");
         System.exit(0);
     }
 
@@ -51,18 +48,18 @@ public class Jukebox {
         if (inp.equals("bye")) {
             Jukebox.exit();
         } else if (inp.equals("list")) {
-            for (int i = 0; i < taskNo; i++) {
-                System.out.println(String.format("%d. %s", i + 1, tasks[i]));
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
             }
         } else if (inp.startsWith("mark")) {
             Scanner s = new Scanner(inp);
             s.next();
             if (s.hasNextInt()) {
                 int idx = s.nextInt();
-                if (idx > taskLimit || idx < 0 || idx > taskNo) {
+                if (idx > tasks.size() || idx < 0) {
                     System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
                 }
-                tasks[idx].markDone();
+                tasks.get(idx).markDone();
                 System.out.println(String.format("marked item %d :D", idx));
             } else {
                 System.out.println("pls gib task no. for me to mark uwu uwu");
@@ -72,7 +69,7 @@ public class Jukebox {
             s.next();
             if (s.hasNextInt()) {
                 int idx = s.nextInt();
-                tasks[idx].unmarkDone();
+                tasks.get(idx).unmarkDone();
             }
         } else if (inp.startsWith("todo")) {
             Matcher todoMatcher = TODO_PATTERN.matcher(inp);
@@ -81,7 +78,7 @@ public class Jukebox {
                 Task newTask = new ToDo(details);
                 addToTasks(newTask);
                 System.out.println(String.format("watashi added the task %s !! anata have %d tasks to go!!",
-                        newTask, taskNo));
+                        newTask, tasks.size()));
             } else {
                 System.out.println("gib me something to work with !!! :(((");
             }
@@ -107,6 +104,20 @@ public class Jukebox {
                 System.out.println(String.format("yeeeeees event %s added", newTask));
             } else {
                 System.out.println("nu !!!! gimme the deets the from the to");
+            }
+        } else if (inp.startsWith("delete")) {
+            Scanner s = new Scanner(inp);
+            s.next();
+            if (s.hasNextInt()) {
+                int idx = s.nextInt();
+                if (idx > tasks.size() || idx < 0) {
+                    System.out.println("inwalid index");
+                } else {
+                    tasks.remove(idx);
+                    System.out.println("!!! begone you normie!!");
+                }
+            } else {
+                System.out.println("wub wub... no indewx....");
             }
         } else {
             System.out.println("eeek?? nani ??/");
