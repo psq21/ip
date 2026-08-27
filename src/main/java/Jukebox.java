@@ -1,7 +1,4 @@
-import classes.Deadline;
-import classes.Event;
-import classes.Task;
-import classes.ToDo;
+import classes.*;
 
 import java.io.*;
 import java.time.format.DateTimeParseException;
@@ -14,7 +11,7 @@ import java.util.regex.Pattern;
 public class Jukebox {
     private static String TASKDATAFOLDER = "data";
     private static String TASKDATAFILE = "data/tasks.txt";
-    private static ArrayList<Task> tasks = new ArrayList<Task>();
+    private static TaskList tasks = new TaskList();
 
     // to do {details}
     private static final Pattern TODO_PATTERN =
@@ -44,19 +41,9 @@ public class Jukebox {
         }
     }
 
-    private static void addToTasks(Task task) {
-        tasks.add(task);
-    }
-
     private static void exit() {
         System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu <3");
         System.exit(0);
-    }
-
-    private static void list() {
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, tasks.get(i));
-        }
     }
 
     private static void handleMark(String inp) {
@@ -64,11 +51,11 @@ public class Jukebox {
         s.next();
         if (s.hasNextInt()) {
             int idx = s.nextInt();
-            if (idx > tasks.size() || idx < 0) {
+            if (tasks.markTask(idx)) {
+                System.out.printf("marked item %d :D%n", idx);
+            } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
-            tasks.get(idx).markDone();
-            System.out.printf("marked item %d :D%n", idx);
             saveAllData();
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
@@ -80,7 +67,11 @@ public class Jukebox {
         s.next();
         if (s.hasNextInt()) {
             int idx = s.nextInt();
-            tasks.get(idx).unmarkDone();
+            if (tasks.unmarkTask(idx)) {
+                System.out.printf("unmarked item %d :PPP", idx);
+            } else {
+                System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
+            }
             saveAllData();
         }
     }
@@ -90,7 +81,7 @@ public class Jukebox {
         if (todoMatcher.matches()) {
             String details = todoMatcher.group(1);
             Task newTask = new ToDo(details);
-            addToTasks(newTask);
+            tasks.add(newTask);
             saveData(newTask);
             System.out.printf("watashi added the task %s !! anata have %d tasks to go!!%n",
                     newTask, tasks.size());
@@ -106,7 +97,7 @@ public class Jukebox {
                 String details = deadlineMatcher.group(1);
                 String by = deadlineMatcher.group(2);
                 Task newTask = new Deadline(details, by);
-                addToTasks(newTask);
+                tasks.add(newTask);
                 saveData(newTask);
                 System.out.printf("oh no scary deadlinw.... %s%n", newTask);
             } catch (DateTimeParseException e) {
@@ -125,7 +116,7 @@ public class Jukebox {
                 String from = eventMatcher.group(2);
                 String to = eventMatcher.group(3);
                 Task newTask = new Event(details, from, to);
-                addToTasks(newTask);
+                tasks.add(newTask);
                 saveData(newTask);
                 System.out.printf("yeeeeees event %s added%n", newTask);
             } catch (DateTimeParseException e) {
@@ -141,11 +132,10 @@ public class Jukebox {
         s.next();
         if (s.hasNextInt()) {
             int idx = s.nextInt();
-            if (idx >= tasks.size() || idx < 0) {
-                System.out.println("inwalid index");
-            } else {
-                tasks.remove(idx);
+            if (tasks.removeTask(idx)) {
                 System.out.println("!!! begone you normie!!");
+            } else {
+                System.out.println("inwalid index");
             }
         } else {
             System.out.println("wub wub... no indewx....");
@@ -184,7 +174,7 @@ public class Jukebox {
         try {
             useTaskFile();
             FileWriter fw = new FileWriter(TASKDATAFILE, true);
-            for (Task task : tasks) {
+            for (Task task : tasks.getTasks()) {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }
             fw.close();
@@ -236,7 +226,7 @@ public class Jukebox {
                 if (isDone) {
                     task.markDone();
                 }
-                addToTasks(task);
+                tasks.add(task);
             }
 
         } catch (IOException e) {
@@ -250,7 +240,7 @@ public class Jukebox {
 
         switch (action) {
             case BYE -> exit();
-            case LIST -> list();
+            case LIST -> tasks.list();
             case MARK -> handleMark(inp);
             case UNMARK -> handleUnmark(inp);
             case TODO -> handleTodo(inp);
