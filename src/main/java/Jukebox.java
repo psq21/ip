@@ -4,6 +4,8 @@ import classes.ToDo;
 import classes.Event;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
@@ -81,6 +83,7 @@ public class Jukebox {
             }
             tasks.get(idx).markDone();
             System.out.println(String.format("marked item %d :D", idx));
+            saveAllData();
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
         }
@@ -92,6 +95,7 @@ public class Jukebox {
         if (s.hasNextInt()) {
             int idx = s.nextInt();
             tasks.get(idx).unmarkDone();
+            saveAllData();
         }
     }
 
@@ -101,6 +105,7 @@ public class Jukebox {
             String details = todoMatcher.group(1);
             Task newTask = new ToDo(details);
             addToTasks(newTask);
+            saveData(newTask);
             System.out.println(String.format("watashi added the task %s !! anata have %d tasks to go!!",
                     newTask, tasks.size()));
         } else {
@@ -115,6 +120,7 @@ public class Jukebox {
             String by = deadlineMatcher.group(2);
             Task newTask = new Deadline(details, by);
             addToTasks(newTask);
+            saveData(newTask);
             System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
         } else {
             System.out.println("no pls gib the details and the deadline");
@@ -129,6 +135,7 @@ public class Jukebox {
             String to = eventMatcher.group(3);
             Task newTask = new Event(details, from, to);
             addToTasks(newTask);
+            saveData(newTask);
             System.out.println(String.format("yeeeeees event %s added", newTask));
         } else {
             System.out.println("nu !!!! gimme the deets the from the to");
@@ -171,17 +178,74 @@ public class Jukebox {
     private static void saveData(Task task) {
         try {
             FileWriter fw = new FileWriter(TASKDATAFILE, true);
-            fw.write(task.saveFormat());
+            fw.write(task.saveFormat() + System.lineSeparator());
+            fw.close();
+            System.out.println("saved to dis");
+        } catch (IOException e) {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    private static void saveAllData() {
+        try {
+            FileWriter fw = new FileWriter(TASKDATAFILE, true);
+            for (Task task : tasks) {
+                fw.write(task.saveFormat() + System.lineSeparator());
+            }
             fw.close();
         } catch (IOException e) {
-            System.out.println("Something went wrong when saving to disk :(((((");
+            System.out.println("Swomething went wrong when saving to disk :(((((");
         }
     }
 
     private static void loadData() {
         File f = new File(TASKDATAFILE);
-        if (!f.exists()) {
-            
+
+        try {
+            if (!f.exists()) {
+                if (f.createNewFile()) {
+                    return;
+                } else {
+                    System.out.println("i has twouble mwaking fwile...");
+                }
+            }
+
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split("\\s*\\|\\s*", -1);
+                if (fields.length < 3) continue;
+
+                String taskType = fields[0].trim();
+                boolean isDone = fields[1].trim().equals("1");
+                Task task;
+
+                switch (taskType) {
+                    case "T":
+                        task = new ToDo(fields[2].trim());
+                        break;
+                    case "D":
+                        if (fields.length < 4) continue;
+                        task = new Deadline(fields[2].trim(), fields[3].trim());
+                        break;
+                    case "E":
+                        if (fields.length < 4) continue;
+                        String[] times = fields[3].trim().split("\\s+to\\s+", 2);
+                        if (times.length < 2) continue;
+                        task = new Event(fields[2].trim(), times[0], times[1]);
+                        break;
+                    default:
+                        continue;
+                }
+
+                if (isDone) {
+                    task.markDone();
+                }
+                addToTasks(task);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Somethign wen weong when loding to dis");
         }
     }
 }
