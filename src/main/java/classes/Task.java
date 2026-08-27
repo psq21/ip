@@ -1,5 +1,8 @@
 package classes;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 abstract public class Task {
     protected boolean done = false;
     private String details;
@@ -21,6 +24,15 @@ abstract public class Task {
     }
 
     abstract public String saveFormat();
+
+    protected String toSaveDateFormat(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+
+    protected String toOtherDateFormat(LocalDate date) {
+        return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    }
+
 
     @Override
     public String toString() {

@@ -1,27 +1,13 @@
 package classes;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Deadline extends Task {
-    protected String stringBy;
-    protected LocalDate dateBy = null;
+    protected LocalDate by;
 
     public Deadline(String details, String by) {
         super(details);
-        try {
-            LocalDate date = LocalDate.parse(by);
-            this.dateBy = date;
-        } catch (DateTimeParseException e) {
-            this.stringBy = by;
-        }
-    }
-
-    protected String byString() {
-        return dateBy != null
-                ? dateBy.format(DateTimeFormatter.ofPattern("MMM d yyyy"))
-                : stringBy;
+        this.by = LocalDate.parse(by);
     }
 
     @Override
@@ -29,11 +15,11 @@ public class Deadline extends Task {
         return String.format("D | %d | %s | %s",
                 done ? 1 : 0,
                 getDetails(),
-                byString());
+                toSaveDateFormat(by));
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + byString() + ")";
+        return "[D]" + super.toString() + " (by: " + toOtherDateFormat(by) + ")";
     }
 }
