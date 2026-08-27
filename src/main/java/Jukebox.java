@@ -52,7 +52,7 @@ public class Jukebox {
 
     private static void list() {
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
+            System.out.printf("%d. %s%n", i + 1, tasks.get(i));
         }
     }
 
@@ -65,7 +65,7 @@ public class Jukebox {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
             tasks.get(idx).markDone();
-            System.out.println(String.format("marked item %d :D", idx));
+            System.out.printf("marked item %d :D%n", idx);
             saveAllData();
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
@@ -89,8 +89,8 @@ public class Jukebox {
             Task newTask = new ToDo(details);
             addToTasks(newTask);
             saveData(newTask);
-            System.out.println(String.format("watashi added the task %s !! anata have %d tasks to go!!",
-                    newTask, tasks.size()));
+            System.out.printf("watashi added the task %s !! anata have %d tasks to go!!%n",
+                    newTask, tasks.size());
         } else {
             System.out.println("gib me something to work with !!! :(((");
         }
@@ -104,7 +104,7 @@ public class Jukebox {
             Task newTask = new Deadline(details, by);
             addToTasks(newTask);
             saveData(newTask);
-            System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
+            System.out.printf("oh no scary deadlinw.... %s%n", newTask);
         } else {
             System.out.println("no pls gib the details and the deadline");
         }
@@ -119,7 +119,7 @@ public class Jukebox {
             Task newTask = new Event(details, from, to);
             addToTasks(newTask);
             saveData(newTask);
-            System.out.println(String.format("yeeeeees event %s added", newTask));
+            System.out.printf("yeeeeees event %s added%n", newTask);
         } else {
             System.out.println("nu !!!! gimme the deets the from the to");
         }
