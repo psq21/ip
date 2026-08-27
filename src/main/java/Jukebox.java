@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Jukebox {
+    private static String TASKDATAFOLDER = "data";
     private static String TASKDATAFILE = "data/tasks.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
@@ -141,9 +142,25 @@ public class Jukebox {
         }
     }
 
+    private static void useTaskFile() throws IOException {
+        File dataFolder = new File(TASKDATAFOLDER);
+        if (!dataFolder.exists()) {
+            if (!dataFolder.mkdir()) {
+                throw new IOException();
+            }
+        }
+
+        File dataFile = new File(TASKDATAFILE);
+        if (!dataFile.exists()) {
+            if (!dataFile.createNewFile()) {
+                throw new IOException();
+            }
+        }
+    }
 
     private static void saveData(Task task) {
         try {
+            useTaskFile();
             FileWriter fw = new FileWriter(TASKDATAFILE, true);
             fw.write(task.saveFormat() + System.lineSeparator());
             fw.close();
@@ -155,6 +172,7 @@ public class Jukebox {
 
     private static void saveAllData() {
         try {
+            useTaskFile();
             FileWriter fw = new FileWriter(TASKDATAFILE, true);
             for (Task task : tasks) {
                 fw.write(task.saveFormat() + System.lineSeparator());
@@ -166,9 +184,9 @@ public class Jukebox {
     }
 
     private static void loadData() {
-        File f = new File(TASKDATAFILE);
-
         try {
+            useTaskFile();
+            File f = new File(TASKDATAFILE);
             if (!f.exists()) {
                 if (f.createNewFile()) {
                     return;
