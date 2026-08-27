@@ -2,13 +2,18 @@ import classes.Task;
 import classes.Deadline;
 import classes.ToDo;
 import classes.Event;
+
+import java.io.FileNotFoundException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.ArrayList;
-
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Jukebox {
+    private static String TASKDATAFILE = "data/tasks.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     // todo {details}
@@ -45,6 +50,7 @@ public class Jukebox {
         // Personality: uwu
         String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
+        loadData();
         while (true) {
             chat(sc);
         }
@@ -159,6 +165,23 @@ public class Jukebox {
             case EVENT -> handleEvent(inp);
             case DELETE -> handleDelete(inp);
             default -> System.out.println("eeek?? nani ??/");
+        }
+    }
+
+    private static void saveData(Task task) {
+        try {
+            FileWriter fw = new FileWriter(TASKDATAFILE, true);
+            fw.write(task.saveFormat());
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Something went wrong when saving to disk :(((((");
+        }
+    }
+
+    private static void loadData() {
+        File f = new File(TASKDATAFILE);
+        if (!f.exists()) {
+            
         }
     }
 }
