@@ -4,10 +4,12 @@ import classes.Task;
 import classes.ToDo;
 
 import java.io.*;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class Jukebox {
     private static String TASKDATAFOLDER = "data";
@@ -100,12 +102,16 @@ public class Jukebox {
     private static void handleDeadline(String inp) {
         Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
         if (deadlineMatcher.matches()) {
-            String details = deadlineMatcher.group(1);
-            String by = deadlineMatcher.group(2);
-            Task newTask = new Deadline(details, by);
-            addToTasks(newTask);
-            saveData(newTask);
-            System.out.printf("oh no scary deadlinw.... %s%n", newTask);
+            try {
+                String details = deadlineMatcher.group(1);
+                String by = deadlineMatcher.group(2);
+                Task newTask = new Deadline(details, by);
+                addToTasks(newTask);
+                saveData(newTask);
+                System.out.printf("oh no scary deadlinw.... %s%n", newTask);
+            } catch (DateTimeParseException e) {
+                System.out.println("pwease gib by in correct format? pweety pwease? (yyyy-MM-dd)");
+            }
         } else {
             System.out.println("no pls gib the details and the deadline");
         }
@@ -114,13 +120,17 @@ public class Jukebox {
     private static void handleEvent(String inp) {
         Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
         if (eventMatcher.matches()) {
-            String details = eventMatcher.group(1);
-            String from = eventMatcher.group(2);
-            String to = eventMatcher.group(3);
-            Task newTask = new Event(details, from, to);
-            addToTasks(newTask);
-            saveData(newTask);
-            System.out.printf("yeeeeees event %s added%n", newTask);
+            try {
+                String details = eventMatcher.group(1);
+                String from = eventMatcher.group(2);
+                String to = eventMatcher.group(3);
+                Task newTask = new Event(details, from, to);
+                addToTasks(newTask);
+                saveData(newTask);
+                System.out.printf("yeeeeees event %s added%n", newTask);
+            } catch (DateTimeParseException e) {
+                System.out.println("pwease gib start/end in correct format? pweety pwease? (yyyy-MM-dd)");
+            }
         } else {
             System.out.println("nu !!!! gimme the deets the from the to");
         }
