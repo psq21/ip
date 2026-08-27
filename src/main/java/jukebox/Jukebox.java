@@ -2,7 +2,6 @@ package jukebox;
 
 import java.util.Scanner;
 
-
 public class Jukebox {
     private static TaskList tasks = new TaskList();
 
