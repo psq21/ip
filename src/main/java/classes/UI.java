@@ -44,7 +44,7 @@ public class UI {
         if (s.hasNextInt()) {
             int idx = s.nextInt();
             if (tasks.unmarkTask(idx)) {
-                System.out.printf("unmarked item %d :PPP", idx);
+                System.out.printf("unmarked item %d :PPP%n", idx);
             } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
