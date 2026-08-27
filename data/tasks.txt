@@ -1,5 +1,3 @@
-D | 0 | fdskf | 2000-01-01
-D | 0 | fdshfk | 2111-11-11
-D | 0 | fjkdsfh | 2999-10-10
-D | 0 | flfds | 2222-10-10
-E | 0 | fdjsfh | Oct 10 1010 to Oct 10 1010
+D | 0 | dslf | 1010-10-10
+D | 1 | fldshf | 1010-10-10
+D | 0 | fhjdsfh | 2222-10-10
