@@ -1,6 +1,4 @@
-import classes.Storage;
-import classes.TaskList;
-import classes.UI;
+package jukebox;
 
 import java.util.Scanner;
 

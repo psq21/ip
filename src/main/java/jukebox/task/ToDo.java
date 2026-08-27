@@ -1,4 +1,4 @@
-package classes;
+package jukebox.task;
 
 public class ToDo extends Task {
     public ToDo(String details) {

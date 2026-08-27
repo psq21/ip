@@ -1,12 +1,17 @@
-package classes;
+package jukebox;
+
+import jukebox.task.Deadline;
+import jukebox.task.Event;
+import jukebox.task.Task;
+import jukebox.task.ToDo;
 
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static classes.Storage.saveAllData;
-import static classes.Storage.saveData;
+import static jukebox.Storage.saveAllData;
+import static jukebox.Storage.saveData;
 
 public class UI {
 

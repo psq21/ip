@@ -1,4 +1,4 @@
-package classes;
+package jukebox.task;
 
 import java.time.LocalDate;
 

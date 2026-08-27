@@ -1,8 +1,7 @@
-package classes;
+package jukebox.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 
 public class Event extends Task {
     protected LocalDate start;

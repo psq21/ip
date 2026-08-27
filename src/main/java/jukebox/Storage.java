@@ -1,4 +1,9 @@
-package classes;
+package jukebox;
+
+import jukebox.task.Deadline;
+import jukebox.task.Event;
+import jukebox.task.Task;
+import jukebox.task.ToDo;
 
 import java.io.*;
 

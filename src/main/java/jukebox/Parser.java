@@ -1,4 +1,4 @@
-package classes;
+package jukebox;
 
 import java.util.regex.Pattern;
 

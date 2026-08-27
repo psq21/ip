@@ -1,4 +1,6 @@
-package classes;
+package jukebox;
+
+import jukebox.task.Task;
 
 import java.util.ArrayList;
 
