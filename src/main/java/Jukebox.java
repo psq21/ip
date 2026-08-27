@@ -1,24 +1,19 @@
-import classes.Task;
 import classes.Deadline;
-import classes.ToDo;
 import classes.Event;
+import classes.Task;
+import classes.ToDo;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Jukebox {
     private static String TASKDATAFILE = "data/tasks.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    // todo {details}
+    // to do {details}
     private static final Pattern TODO_PATTERN =
             Pattern.compile("^todo\\s+(.+)$");
 
@@ -43,18 +38,6 @@ public class Jukebox {
             if (inp.startsWith("event")) return EVENT;
             if (inp.startsWith("delete")) return DELETE;
             return UNKNOWN;
-        }
-    }
-
-    public static void main(String[] args) {
-        String chatbotName = "jukebox";
-        Scanner sc = new Scanner(System.in);
-        // Personality: uwu
-        String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
-        System.out.println(greeting);
-        loadData();
-        while (true) {
-            chat(sc);
         }
     }
 
@@ -158,22 +141,6 @@ public class Jukebox {
         }
     }
 
-    private static void chat(Scanner sc) {
-        String inp = sc.nextLine();
-        Action action = Action.fromInput(inp);
-
-        switch (action) {
-            case BYE -> exit();
-            case LIST -> list();
-            case MARK -> handleMark(inp);
-            case UNMARK -> handleUnmark(inp);
-            case TODO -> handleTodo(inp);
-            case DEADLINE -> handleDeadline(inp);
-            case EVENT -> handleEvent(inp);
-            case DELETE -> handleDelete(inp);
-            default -> System.out.println("eeek?? nani ??/");
-        }
-    }
 
     private static void saveData(Task task) {
         try {
@@ -248,4 +215,34 @@ public class Jukebox {
             System.out.println("Somethign wen weong when loding to dis");
         }
     }
+
+    private static void chat(Scanner sc) {
+        String inp = sc.nextLine();
+        Action action = Action.fromInput(inp);
+
+        switch (action) {
+            case BYE -> exit();
+            case LIST -> list();
+            case MARK -> handleMark(inp);
+            case UNMARK -> handleUnmark(inp);
+            case TODO -> handleTodo(inp);
+            case DEADLINE -> handleDeadline(inp);
+            case EVENT -> handleEvent(inp);
+            case DELETE -> handleDelete(inp);
+            default -> System.out.println("eeek?? nani ??/");
+        }
+    }
+
+    public static void main(String[] args) {
+        String chatbotName = "jukebox";
+        Scanner sc = new Scanner(System.in);
+        // Personality: uwu
+        String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
+        System.out.println(greeting);
+        loadData();
+        while (true) {
+            chat(sc);
+        }
+    }
+
 }
