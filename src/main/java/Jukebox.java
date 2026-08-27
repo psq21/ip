@@ -1,17 +1,20 @@
-import classes.Task;
 import classes.Deadline;
-import classes.ToDo;
 import classes.Event;
+import classes.Task;
+import classes.ToDo;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ArrayList;
-
-import java.util.Scanner;
 
 public class Jukebox {
+    private static String TASKDATAFOLDER = "data";
+    private static String TASKDATAFILE = "data/tasks.txt";
     private static ArrayList<Task> tasks = new ArrayList<Task>();
 
-    // todo {details}
+    // to do {details}
     private static final Pattern TODO_PATTERN =
             Pattern.compile("^todo\\s+(.+)$");
 
@@ -39,17 +42,6 @@ public class Jukebox {
         }
     }
 
-    public static void main(String[] args) {
-        String chatbotName = "jukebox";
-        Scanner sc = new Scanner(System.in);
-        // Personality: uwu
-        String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
-        System.out.println(greeting);
-        while (true) {
-            chat(sc);
-        }
-    }
-
     private static void addToTasks(Task task) {
         tasks.add(task);
     }
@@ -61,7 +53,7 @@ public class Jukebox {
 
     private static void list() {
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(String.format("%d. %s", i + 1, tasks.get(i)));
+            System.out.printf("%d. %s%n", i + 1, tasks.get(i));
         }
     }
 
@@ -74,7 +66,8 @@ public class Jukebox {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
             tasks.get(idx).markDone();
-            System.out.println(String.format("marked item %d :D", idx));
+            System.out.printf("marked item %d :D%n", idx);
+            saveAllData();
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
         }
@@ -86,6 +79,7 @@ public class Jukebox {
         if (s.hasNextInt()) {
             int idx = s.nextInt();
             tasks.get(idx).unmarkDone();
+            saveAllData();
         }
     }
 
@@ -95,8 +89,9 @@ public class Jukebox {
             String details = todoMatcher.group(1);
             Task newTask = new ToDo(details);
             addToTasks(newTask);
-            System.out.println(String.format("watashi added the task %s !! anata have %d tasks to go!!",
-                    newTask, tasks.size()));
+            saveData(newTask);
+            System.out.printf("watashi added the task %s !! anata have %d tasks to go!!%n",
+                    newTask, tasks.size());
         } else {
             System.out.println("gib me something to work with !!! :(((");
         }
@@ -109,7 +104,8 @@ public class Jukebox {
             String by = deadlineMatcher.group(2);
             Task newTask = new Deadline(details, by);
             addToTasks(newTask);
-            System.out.println(String.format("oh no scary deadlinw.... %s", newTask));
+            saveData(newTask);
+            System.out.printf("oh no scary deadlinw.... %s%n", newTask);
         } else {
             System.out.println("no pls gib the details and the deadline");
         }
@@ -123,7 +119,8 @@ public class Jukebox {
             String to = eventMatcher.group(3);
             Task newTask = new Event(details, from, to);
             addToTasks(newTask);
-            System.out.println(String.format("yeeeeees event %s added", newTask));
+            saveData(newTask);
+            System.out.printf("yeeeeees event %s added%n", newTask);
         } else {
             System.out.println("nu !!!! gimme the deets the from the to");
         }
@@ -145,6 +142,98 @@ public class Jukebox {
         }
     }
 
+    private static void useTaskFile() throws IOException {
+        File dataFolder = new File(TASKDATAFOLDER);
+        if (!dataFolder.exists()) {
+            if (!dataFolder.mkdir()) {
+                throw new IOException();
+            }
+        }
+
+        File dataFile = new File(TASKDATAFILE);
+        if (!dataFile.exists()) {
+            if (!dataFile.createNewFile()) {
+                throw new IOException();
+            }
+        }
+    }
+
+    private static void saveData(Task task) {
+        try {
+            useTaskFile();
+            FileWriter fw = new FileWriter(TASKDATAFILE, true);
+            fw.write(task.saveFormat() + System.lineSeparator());
+            fw.close();
+            System.out.println("saved to dis");
+        } catch (IOException e) {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    private static void saveAllData() {
+        try {
+            useTaskFile();
+            FileWriter fw = new FileWriter(TASKDATAFILE, true);
+            for (Task task : tasks) {
+                fw.write(task.saveFormat() + System.lineSeparator());
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    private static void loadData() {
+        try {
+            useTaskFile();
+            File f = new File(TASKDATAFILE);
+            if (!f.exists()) {
+                if (f.createNewFile()) {
+                    return;
+                } else {
+                    System.out.println("i has twouble mwaking fwile...");
+                }
+            }
+
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] fields = line.split("\\s*\\|\\s*", -1);
+                if (fields.length < 3) continue;
+
+                String taskType = fields[0].trim();
+                boolean isDone = fields[1].trim().equals("1");
+                Task task;
+
+                switch (taskType) {
+                    case "T":
+                        task = new ToDo(fields[2].trim());
+                        break;
+                    case "D":
+                        if (fields.length < 4) continue;
+                        task = new Deadline(fields[2].trim(), fields[3].trim());
+                        break;
+                    case "E":
+                        if (fields.length < 4) continue;
+                        String[] times = fields[3].trim().split("\\s+to\\s+", 2);
+                        if (times.length < 2) continue;
+                        task = new Event(fields[2].trim(), times[0], times[1]);
+                        break;
+                    default:
+                        continue;
+                }
+
+                if (isDone) {
+                    task.markDone();
+                }
+                addToTasks(task);
+            }
+
+        } catch (IOException e) {
+            System.out.println("Somethign wen weong when loding to dis");
+        }
+    }
+
     private static void chat(Scanner sc) {
         String inp = sc.nextLine();
         Action action = Action.fromInput(inp);
@@ -161,4 +250,17 @@ public class Jukebox {
             default -> System.out.println("eeek?? nani ??/");
         }
     }
+
+    public static void main(String[] args) {
+        String chatbotName = "jukebox";
+        Scanner sc = new Scanner(System.in);
+        // Personality: uwu
+        String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
+        System.out.println(greeting);
+        loadData();
+        while (true) {
+            chat(sc);
+        }
+    }
+
 }

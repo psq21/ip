@@ -1,7 +1,7 @@
 package classes;
 
-public class Task {
-    private boolean done = false;
+abstract public class Task {
+    protected boolean done = false;
     private String details;
 
     public Task(String details) {
@@ -19,6 +19,8 @@ public class Task {
     public void unmarkDone() {
         this.done = false;
     }
+
+    abstract public String saveFormat();
 
     @Override
     public String toString() {
