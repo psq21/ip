@@ -141,7 +141,7 @@ public class Jukebox {
         s.next();
         if (s.hasNextInt()) {
             int idx = s.nextInt();
-            if (idx > tasks.size() || idx < 0) {
+            if (idx >= tasks.size() || idx < 0) {
                 System.out.println("inwalid index");
             } else {
                 tasks.remove(idx);
