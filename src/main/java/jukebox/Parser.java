@@ -1,8 +1,5 @@
 package jukebox;
 
-import jukebox.task.Task;
-import jukebox.task.ToDo;
-
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
