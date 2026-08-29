@@ -34,7 +34,7 @@ public class Parser {
     public static String parseTodo(String inp) {
         Matcher todoMatcher = TODO_PATTERN.matcher(inp);
         if (todoMatcher.matches()) {
-            return todoMatcher.group(1);
+            return todoMatcher.group(1).trim();
         } else {
             return null;
         }
@@ -43,8 +43,8 @@ public class Parser {
     public static String[] parseDeadline(String inp) {
         Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
         if (deadlineMatcher.matches()) {
-            String details = deadlineMatcher.group(1);
-            String by = deadlineMatcher.group(2);
+            String details = deadlineMatcher.group(1).trim();
+            String by = deadlineMatcher.group(2).trim();
             return new String[]{details, by};
         } else {
             return null;
@@ -54,9 +54,9 @@ public class Parser {
     public static String[] parseEvent(String inp) {
         Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
         if (eventMatcher.matches()) {
-            String details = eventMatcher.group(1);
-            String from = eventMatcher.group(2);
-            String to = eventMatcher.group(3);
+            String details = eventMatcher.group(1).trim();
+            String from = eventMatcher.group(2).trim();
+            String to = eventMatcher.group(3).trim();
             return new String[] {details, from, to};
         } else {
             return null;
