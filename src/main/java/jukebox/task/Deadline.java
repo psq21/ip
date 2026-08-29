@@ -2,6 +2,10 @@ package jukebox.task;
 
 import java.time.LocalDate;
 
+/**
+ * Deadline class.
+ * Subclass of Task.
+ */
 public class Deadline extends Task {
     protected LocalDate by;
 

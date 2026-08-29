@@ -3,6 +3,10 @@ package jukebox.task;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Event class.
+ * Subclass of Task.
+ */
 public class Event extends Task {
     protected LocalDate start;
     protected LocalDate end;

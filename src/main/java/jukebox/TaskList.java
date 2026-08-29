@@ -4,27 +4,54 @@ import jukebox.task.Task;
 
 import java.util.ArrayList;
 
+/**
+ * Encapsulates data and functions associated with a task list.
+ */
 public class TaskList {
     private ArrayList<Task> tasks = new ArrayList<Task>();
 
+    /**
+     * Adds given task to the list.
+     *
+     * @param task Task to add.
+     */
     public void add(Task task) {
         tasks.add(task);
     }
 
+    /**
+     * Prints out all tasks.
+     */
     public void list() {
         for (int i = 0; i < tasks.size(); i++) {
             System.out.printf("%d. %s%n", i + 1, tasks.get(i));
         }
     }
 
+    /**
+     * Returns size of list.
+     *
+     * @return Size of list.
+     */
     public int size() {
         return tasks.size();
     }
 
+    /**
+     * Returns task list.
+     *
+     * @return ArrayList of tasks.
+     */
     public ArrayList<Task> getTasks() {
         return tasks;
     }
 
+    /**
+     * Marks task at given index as done.
+     *
+     * @param idx Index of task.
+     * @return Is successful.
+     */
     public boolean markTask(int idx) {
         idx = idx - 1;
         if (idx >= tasks.size() || idx < 0) {
@@ -34,6 +61,12 @@ public class TaskList {
         return true;
     }
 
+    /**
+     * Marks task at given index as undone.
+     *
+     * @param idx Index of task.
+     * @return Is successful.
+     */
     public boolean unmarkTask(int idx) {
         idx = idx - 1;
         if (idx >= tasks.size() || idx < 0) {
@@ -43,6 +76,12 @@ public class TaskList {
         return true;
     }
 
+    /**
+     * Removes task at given index from list.
+     *
+     * @param idx Index of task.
+     * @return Is successful.
+     */
     public boolean removeTask(int idx) {
         idx = idx - 1;
         if (idx >= tasks.size() || idx < 0) {

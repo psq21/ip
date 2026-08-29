@@ -4,36 +4,73 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
+/**
+ * Task class.
+ */
 abstract public class Task {
     protected boolean done = false;
     private String details;
 
-    public Task(String details) {
+    protected Task(String details) {
         this.details = details;
     }
 
+    /**
+     * Returns details of task.
+     *
+     * @return Details of task.
+     */
     public String getDetails() {
         return this.details;
     }
 
+    /**
+     * Marks task as done.
+     */
     public void markDone() {
         this.done = true;
     }
 
+    /**
+     * Marks task as undone.
+     */
     public void unmarkDone() {
         this.done = false;
     }
 
+    /**
+     * Returns data of task formatted for saving.
+     *
+     * @return Formatted string.
+     */
     abstract public String saveFormat();
 
+    /**
+     * Formats date for saving.
+     *
+     * @param date Date to format.
+     * @return Formatted string.
+     */
     protected String toSaveDateFormat(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
     }
 
+    /**
+     * Formats date for printing.
+     *
+     * @param date Date to format.
+     * @return Formatted string.
+     */
     protected String toOtherDateFormat(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    /**
+     * Reads date from formatted string.
+     *
+     * @param dateString Formatted string.
+     * @return LocalDate object.
+     */
     protected LocalDate fromStringFormat(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
                                             .withResolverStyle(ResolverStyle.STRICT);

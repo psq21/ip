@@ -1,5 +1,9 @@
 package jukebox.task;
 
+/**
+ * ToDo class.
+ * Subclass of Task.
+ */
 public class ToDo extends Task {
     public ToDo(String details) {
         super(details);

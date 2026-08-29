@@ -2,10 +2,13 @@ package jukebox;
 
 import java.util.Scanner;
 
+/**
+ * Main class for chatbot.
+ */
 public class Jukebox {
     private static TaskList tasks = new TaskList();
 
-    enum Action {
+    private enum Action {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, UNKNOWN;
 
         public static Action fromInput(String inp) {

@@ -11,10 +11,18 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
+/**
+ * Class to handle I/O.
+ */
 public class Storage {
     private static final String TASKDATAFOLDER = "data";
     private static final String TASKDATAFILE = "data/tasks.txt";
 
+    /**
+     * Sets up data storage file for usage.
+     *
+     * @throws IOException If failed to create file/directory.
+     */
     public static void useTaskFile() throws IOException {
         File dataFolder = new File(TASKDATAFOLDER);
         if (!dataFolder.exists()) {
@@ -31,6 +39,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes a task to disk.
+     *
+     * @param task Task to write.
+     * @return Is successful.
+     */
     public static boolean saveData(Task task) {
         try {
             useTaskFile();
@@ -43,6 +57,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Writes all to disk.
+     * Wipes current data in file.
+     *
+     * @param tasks Tasks to write.
+     * @return Is successful.
+     */
     public static boolean rewriteData(TaskList tasks) {
         try {
             useTaskFile();
@@ -57,6 +78,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Loads all tasks from file.
+     *
+     * @param tasks List to load to.
+     * @return Is successful.
+     */
     public static boolean loadData(TaskList tasks) {
         try {
             useTaskFile();
