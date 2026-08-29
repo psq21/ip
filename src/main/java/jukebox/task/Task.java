@@ -25,6 +25,16 @@ abstract public class Task {
     }
 
     /**
+     * Checks if details contains given string.
+     *
+     * @param str String to search for.
+     * @return Details contains search string.
+     */
+    public boolean contains(String str) {
+        return this.details.contains(str);
+    }
+
+    /**
      * Marks task as done.
      */
     public void markDone() {

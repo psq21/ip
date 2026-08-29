@@ -38,6 +38,16 @@ public class TaskList {
     }
 
     /**
+     * Returns task at given index.
+     *
+     * @param idx Index.
+     * @return Task at given index.
+     */
+    public Task get(int idx) {
+        return tasks.get(idx);
+    }
+
+    /**
      * Returns task list.
      *
      * @return ArrayList of tasks.
