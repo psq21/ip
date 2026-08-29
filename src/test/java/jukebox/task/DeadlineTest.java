@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.format.DateTimeParseException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DeadlineTest {
     @Test
@@ -36,24 +35,21 @@ public class DeadlineTest {
     }
 
     @Test
-    public void deadline_exceptionThrown() {
-       try {
-           Deadline d = new Deadline("CA1 Essay", "1");
-           fail();
-       } catch (DateTimeParseException e) {
-           assertEquals("Text '1' could not be parsed at index 0", e.getMessage());
-       } catch (Exception e) {
-           fail();
-       }
+    public void constructor_invalidDateFormat_throwsException() {
+        DateTimeParseException exception = assertThrows(DateTimeParseException.class,
+                () -> new Deadline("CA1 Essay", "1"));
+        assertEquals("Text '1' could not be parsed at index 0", exception.getMessage());
     }
 
     @Test
-    public void deadline_success() {
-        try {
-            Deadline d = new Deadline("CA1 Essay", "2026-10-10");
-            assertEquals("[D][ ] CA1 Essay (by: Oct 10 2026)", d.toString());
-        } catch (Exception e) {
-            fail();
-        }
+    public void constructor_invalidCalendarDate_throwsException() {
+        assertThrows(DateTimeParseException.class,
+                () -> new Deadline("CA1 Essay", "2026-02-29"));
+    }
+
+    @Test
+    public void constructor_validLeapDay_success() {
+        Deadline d = new Deadline("CA1 Essay", "2024-02-29");
+        assertEquals("[D][ ] CA1 Essay (by: Feb 29 2024)", d.toString());
     }
 }
