@@ -6,12 +6,8 @@ import jukebox.task.Task;
 import jukebox.task.ToDo;
 
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
-import java.util.regex.Matcher;
 
 import static jukebox.Parser.*;
-import static jukebox.Storage.saveAllData;
-import static jukebox.Storage.saveData;
 
 public class UI {
 
@@ -23,7 +19,7 @@ public class UI {
             } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
-            saveAllData(tasks);
+            Storage.rewriteData(tasks);
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
         }
@@ -37,7 +33,7 @@ public class UI {
             } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
-            saveAllData(tasks);
+            Storage.rewriteData(tasks);
         }
     }
 
@@ -97,6 +93,30 @@ public class UI {
             }
         } else {
             System.out.println("wub wub... no indewx....");
+        }
+    }
+
+    public static void saveData(Task task) {
+        if (Storage.saveData(task)) {
+            System.out.println("saved to dis");
+        } else {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    public static void rewriteData(TaskList tasks) {
+        if (Storage.rewriteData(tasks)) {
+            System.out.println("saved to dis");
+        } else {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    public static void loadData(TaskList tasks) {
+        if (Storage.loadData(tasks)) {
+            System.out.println("okiii loaded from disk :3");
+        } else {
+            System.out.println("Somethign wen weong when loding from dis");
         }
     }
 
