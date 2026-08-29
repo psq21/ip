@@ -27,7 +27,7 @@ public class TaskList {
 
     public boolean markTask(int idx) {
         idx = idx - 1;
-        if (idx > tasks.size() || idx < 0) {
+        if (idx >= tasks.size() || idx < 0) {
             return false;
         }
         tasks.get(idx).markDone();
@@ -36,7 +36,7 @@ public class TaskList {
 
     public boolean unmarkTask(int idx) {
         idx = idx - 1;
-        if (idx > tasks.size() || idx < 0) {
+        if (idx >= tasks.size() || idx < 0) {
             return false;
         }
         tasks.get(idx).unmarkDone();

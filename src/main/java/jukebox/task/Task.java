@@ -2,6 +2,7 @@ package jukebox.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 abstract public class Task {
     protected boolean done = false;
@@ -26,13 +27,18 @@ abstract public class Task {
     abstract public String saveFormat();
 
     protected String toSaveDateFormat(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return date.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
     }
 
     protected String toOtherDateFormat(LocalDate date) {
         return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    protected LocalDate fromStringFormat(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+                                            .withResolverStyle(ResolverStyle.STRICT);
+        return LocalDate.parse(dateString, formatter);
+    }
 
     @Override
     public String toString() {

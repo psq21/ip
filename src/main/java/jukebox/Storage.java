@@ -31,19 +31,19 @@ public class Storage {
         }
     }
 
-    public static void saveData(Task task) {
+    public static boolean saveData(Task task) {
         try {
             useTaskFile();
             FileWriter fw = new FileWriter(TASKDATAFILE, true);
             fw.write(task.saveFormat() + System.lineSeparator());
             fw.close();
-            System.out.println("saved to dis");
+            return true;
         } catch (IOException e) {
-            System.out.println("Swomething went wrong when saving to disk :(((((");
+            return false;
         }
     }
 
-    public static void saveAllData(TaskList tasks) {
+    public static boolean rewriteData(TaskList tasks) {
         try {
             useTaskFile();
             FileWriter fw = new FileWriter(TASKDATAFILE);
@@ -51,20 +51,19 @@ public class Storage {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }
             fw.close();
+            return true;
         } catch (IOException e) {
-            System.out.println("Swomething went wrong when saving to disk :(((((");
+            return false;
         }
     }
 
-    public static void loadData(TaskList tasks) {
+    public static boolean loadData(TaskList tasks) {
         try {
             useTaskFile();
             File f = new File(TASKDATAFILE);
             if (!f.exists()) {
-                if (f.createNewFile()) {
-                    return;
-                } else {
-                    System.out.println("i has twouble mwaking fwile...");
+                if (!f.createNewFile()) {
+                    return false;
                 }
             }
 
@@ -101,9 +100,10 @@ public class Storage {
                 }
                 tasks.add(task);
             }
+            return true;
 
         } catch (IOException e) {
-            System.out.println("Somethign wen weong when loding to dis");
+            return false;
         }
     }
 }

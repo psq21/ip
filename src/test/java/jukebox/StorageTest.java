@@ -1,0 +1,7 @@
+package jukebox;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class StorageTest {
+
+}

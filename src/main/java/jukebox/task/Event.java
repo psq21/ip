@@ -9,11 +9,8 @@ public class Event extends Task {
 
     public Event(String details, String start, String end) {
         super(details);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dateStart = LocalDate.parse(start, formatter);
-        LocalDate dateEnd = LocalDate.parse(end, formatter);
-        this.start = dateStart;
-        this.end = dateEnd;
+        this.start = fromStringFormat(start);
+        this.end = fromStringFormat(end);
     }
 
     @Override

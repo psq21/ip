@@ -6,61 +6,40 @@ import jukebox.task.Task;
 import jukebox.task.ToDo;
 
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static jukebox.Storage.saveAllData;
-import static jukebox.Storage.saveData;
+import static jukebox.Parser.*;
 
 public class UI {
 
-    // to do {details}
-    private static final Pattern TODO_PATTERN =
-            Pattern.compile("^todo\\s+(.+)$");
-
-    // deadline {details} /by {string}
-    private static final Pattern DEADLINE_PATTERN =
-            Pattern.compile("^deadline\\s+(.+?)\\s+/by\\s+(.+)$");
-
-    // event {details} /from {string} /to {string}
-    private static final Pattern EVENT_PATTERN =
-            Pattern.compile("^event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)$");
-
     public static void handleMark(String inp, TaskList tasks) {
-        Scanner s = new Scanner(inp);
-        s.next();
-        if (s.hasNextInt()) {
-            int idx = s.nextInt();
+        Integer idx = parseIndex(inp);
+        if (idx != null) {
             if (tasks.markTask(idx)) {
                 System.out.printf("marked item %d :D%n", idx);
             } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
-            saveAllData(tasks);
+            Storage.rewriteData(tasks);
         } else {
             System.out.println("pls gib task no. for me to mark uwu uwu");
         }
     }
 
     public static void handleUnmark(String inp, TaskList tasks) {
-        Scanner s = new Scanner(inp);
-        s.next();
-        if (s.hasNextInt()) {
-            int idx = s.nextInt();
+        Integer idx = parseIndex(inp);
+        if (idx != null) {
             if (tasks.unmarkTask(idx)) {
                 System.out.printf("unmarked item %d :PPP%n", idx);
             } else {
                 System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
             }
-            saveAllData(tasks);
+            Storage.rewriteData(tasks);
         }
     }
 
     public static void handleTodo(String inp, TaskList tasks) {
-        Matcher todoMatcher = TODO_PATTERN.matcher(inp);
-        if (todoMatcher.matches()) {
-            String details = todoMatcher.group(1);
+        String details = parseTodo(inp);
+        if (details != null) {
             Task newTask = new ToDo(details);
             tasks.add(newTask);
             saveData(newTask);
@@ -72,31 +51,27 @@ public class UI {
     }
 
     public static void handleDeadline(String inp, TaskList tasks) {
-        Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
-        if (deadlineMatcher.matches()) {
-            try {
-                String details = deadlineMatcher.group(1);
-                String by = deadlineMatcher.group(2);
-                Task newTask = new Deadline(details, by);
+        String[] properties = parseDeadline(inp);
+        try {
+            if (properties != null) {
+                Task newTask = new Deadline(properties[0], properties[1]);
                 tasks.add(newTask);
                 saveData(newTask);
                 System.out.printf("oh no scary deadlinw.... %s%n", newTask);
-            } catch (DateTimeParseException e) {
-                System.out.println("pwease gib by in correct format? pweety pwease? (yyyy-MM-dd)");
+            } else {
+                // if appropriate arguments are not given
+                System.out.println("no pls gib the details and the deadline");
             }
-        } else {
-            System.out.println("no pls gib the details and the deadline");
+        } catch (Exception e) { // occurs if date is not in correct format
+            System.out.println("pwease gib by in correct format? pweety pwease? (yyyy-MM-dd)");
         }
     }
 
     public static void handleEvent(String inp, TaskList tasks) {
-        Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
-        if (eventMatcher.matches()) {
+        String[] properties = parseEvent(inp);
+        if (properties != null) {
             try {
-                String details = eventMatcher.group(1);
-                String from = eventMatcher.group(2);
-                String to = eventMatcher.group(3);
-                Task newTask = new Event(details, from, to);
+                Task newTask = new Event(properties[0], properties[1], properties[2]);
                 tasks.add(newTask);
                 saveData(newTask);
                 System.out.printf("yeeeeees event %s added%n", newTask);
@@ -109,10 +84,8 @@ public class UI {
     }
 
     public static void handleDelete(String inp, TaskList tasks) {
-        Scanner s = new Scanner(inp);
-        s.next();
-        if (s.hasNextInt()) {
-            int idx = s.nextInt();
+        Integer idx = parseIndex(inp);
+        if (idx != null) {
             if (tasks.removeTask(idx)) {
                 System.out.println("!!! begone you normie!!");
             } else {
@@ -120,6 +93,30 @@ public class UI {
             }
         } else {
             System.out.println("wub wub... no indewx....");
+        }
+    }
+
+    public static void saveData(Task task) {
+        if (Storage.saveData(task)) {
+            System.out.println("saved to dis");
+        } else {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    public static void rewriteData(TaskList tasks) {
+        if (Storage.rewriteData(tasks)) {
+            System.out.println("saved to dis");
+        } else {
+            System.out.println("Swomething went wrong when saving to disk :(((((");
+        }
+    }
+
+    public static void loadData(TaskList tasks) {
+        if (Storage.loadData(tasks)) {
+            System.out.println("okiii loaded from disk :3");
+        } else {
+            System.out.println("Somethign wen weong when loding from dis");
         }
     }
 
