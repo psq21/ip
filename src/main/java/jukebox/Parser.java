@@ -7,6 +7,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Class to extract data from commands.
+ */
 public class Parser {
     // to do {details}
     private static final Pattern TODO_PATTERN =
@@ -20,6 +23,13 @@ public class Parser {
     private static final Pattern EVENT_PATTERN =
             Pattern.compile("^event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)$");
 
+    /**
+     * Returns integer passed as input to the command.
+     * Used for mark, unmark and delete.
+     *
+     * @param inp Command input by user.
+     * @return Index | null.
+     */
     public static Integer parseIndex(String inp) {
         Scanner s = new Scanner(inp);
         s.next();
@@ -31,6 +41,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns details passed as input to todo command.
+     *
+     * @param inp Command input by user.
+     * @return Details of ToDo | null.
+     */
     public static String parseTodo(String inp) {
         Matcher todoMatcher = TODO_PATTERN.matcher(inp);
         if (todoMatcher.matches()) {
@@ -40,6 +56,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns details and deadline passed to deadline command.
+     *
+     * @param inp Command input by user.
+     * @return Details and deadline of Deadline | null.
+     */
     public static String[] parseDeadline(String inp) {
         Matcher deadlineMatcher = DEADLINE_PATTERN.matcher(inp);
         if (deadlineMatcher.matches()) {
@@ -51,6 +73,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns details, start and end passed to event command.
+     *
+     * @param inp Command input by user.
+     * @return Details, start & end of Event | null.
+     */
     public static String[] parseEvent(String inp) {
         Matcher eventMatcher = EVENT_PATTERN.matcher(inp);
         if (eventMatcher.matches()) {
