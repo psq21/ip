@@ -1,4 +1,2 @@
-D | 0 | dslf | 1010-10-10
-D | 1 | fldshf | 1010-10-10
-D | 0 | fhjdsfh | 2222-10-10
-T | 0 | fjldsf
+T | 1 | buy milk
+D | 0 | submit report | 2026-09-01
