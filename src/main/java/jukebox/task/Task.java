@@ -33,6 +33,10 @@ abstract public class Task {
         return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    protected LocalDate fromStringFormat(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(dateString, formatter);
+    }
 
     @Override
     public String toString() {

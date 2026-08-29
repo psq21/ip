@@ -7,7 +7,7 @@ public class Deadline extends Task {
 
     public Deadline(String details, String by) {
         super(details);
-        this.by = LocalDate.parse(by);
+        this.by = fromStringFormat(by);
     }
 
     @Override
