@@ -2,7 +2,6 @@ package jukebox.task;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.DateTimeException;
 import java.time.format.DateTimeParseException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,8 +43,8 @@ public class DeadlineTest {
 
     @Test
     public void constructor_invalidCalendarDate_throwsException() {
-        assertThrows(DateTimeException.class,
-                () -> new Deadline("CA1 Essay", "2026-02-40"));
+        assertThrows(DateTimeParseException.class,
+                () -> new Deadline("CA1 Essay", "2026-02-29"));
     }
 
     @Test
