@@ -16,6 +16,10 @@ abstract public class Task {
         return this.details;
     }
 
+    public boolean contains(String str) {
+        return this.details.contains(str);
+    }
+
     public void markDone() {
         this.done = true;
     }

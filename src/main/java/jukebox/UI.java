@@ -120,6 +120,23 @@ public class UI {
         }
     }
 
+
+    public static void handleFind(String inp, TaskList tasks) {
+        String search = Parser.parseFind(inp);
+        if (search != null) {
+            System.out.println("here's all the matching stuffs :PP");
+            for (int i = 0; i < tasks.size(); i++) {
+                Task task = tasks.get(i);
+                if (task.contains(search)) {
+                    System.out.printf("%d. %s %n", i + 1, task);
+                }
+            }
+        } else {
+            System.out.println("no mwatch :(");
+        }
+
+    }
+
     public static void exit() {
         System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu <3");
         System.exit(0);

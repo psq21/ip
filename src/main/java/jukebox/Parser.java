@@ -12,6 +12,10 @@ public class Parser {
     private static final Pattern TODO_PATTERN =
             Pattern.compile("^todo\\s+(.+)$");
 
+    // find {string}
+    private static final Pattern FIND_PATTERN =
+            Pattern.compile("^find\\s+(.+)$");
+
     // deadline {details} /by {string}
     private static final Pattern DEADLINE_PATTERN =
             Pattern.compile("^deadline\\s+(.+?)\\s+/by\\s+(.+)$");
@@ -58,6 +62,15 @@ public class Parser {
             String from = eventMatcher.group(2).trim();
             String to = eventMatcher.group(3).trim();
             return new String[] {details, from, to};
+        } else {
+            return null;
+        }
+    }
+
+    public static String parseFind(String inp) {
+        Matcher matcher = FIND_PATTERN.matcher(inp);
+        if (matcher.matches()) {
+            return matcher.group(1);
         } else {
             return null;
         }

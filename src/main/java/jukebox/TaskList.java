@@ -21,6 +21,10 @@ public class TaskList {
         return tasks.size();
     }
 
+    public Task get(int idx) {
+        return tasks.get(idx);
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }

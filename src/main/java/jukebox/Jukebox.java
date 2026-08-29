@@ -6,7 +6,7 @@ public class Jukebox {
     private static TaskList tasks = new TaskList();
 
     enum Action {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, UNKNOWN;
+        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN;
 
         public static Action fromInput(String inp) {
             if (inp.equals("bye")) return BYE;
@@ -17,6 +17,7 @@ public class Jukebox {
             if (inp.startsWith("deadline")) return DEADLINE;
             if (inp.startsWith("event")) return EVENT;
             if (inp.startsWith("delete")) return DELETE;
+            if (inp.startsWith("find")) return FIND;
             return UNKNOWN;
         }
     }
@@ -34,6 +35,7 @@ public class Jukebox {
             case DEADLINE -> UI.handleDeadline(inp, tasks);
             case EVENT -> UI.handleEvent(inp, tasks);
             case DELETE -> UI.handleDelete(inp, tasks);
+            case FIND -> UI.handleFind(inp, tasks);
             default -> System.out.println("eeek?? nani ??/");
         }
     }
