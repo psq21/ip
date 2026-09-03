@@ -10,6 +10,13 @@ public class Event extends Task {
     protected LocalDate start;
     protected LocalDate end;
 
+    /**
+     * Constructor of an event task.
+     *
+     * @param details Details of task.
+     * @param start Start date/time of task.
+     * @param end End date/time of task.
+     */
     public Event(String details, String start, String end) {
         super(details);
         this.start = fromStringFormat(start);
@@ -19,7 +26,7 @@ public class Event extends Task {
     @Override
     public String saveFormat() {
         return String.format("E | %d | %s | %s to %s",
-                this.done ? 1 : 0,
+                this.isDone ? 1 : 0,
                 this.getDetails(),
                 toOtherDateFormat(start),
                 toOtherDateFormat(end));

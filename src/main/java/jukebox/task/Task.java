@@ -8,7 +8,7 @@ import java.time.format.ResolverStyle;
  * Task class.
  */
 abstract public class Task {
-    protected boolean done = false;
+    protected boolean isDone = false;
     private String details;
 
     protected Task(String details) {
@@ -38,14 +38,14 @@ abstract public class Task {
      * Marks task as done.
      */
     public void markDone() {
-        this.done = true;
+        this.isDone = true;
     }
 
     /**
      * Marks task as undone.
      */
     public void unmarkDone() {
-        this.done = false;
+        this.isDone = false;
     }
 
     /**
@@ -89,6 +89,6 @@ abstract public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s %s", this.done ? "[X]" : "[ ]", details);
+        return String.format("%s %s", this.isDone ? "[X]" : "[ ]", details);
     }
 }

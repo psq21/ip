@@ -25,7 +25,7 @@ public class Jukebox {
         }
     }
 
-    private static void chat(Scanner sc) {
+    private static void processCommand(Scanner sc) {
         String inp = sc.nextLine();
         Action action = Action.fromInput(inp);
 
@@ -51,7 +51,7 @@ public class Jukebox {
         System.out.println(greeting);
         Storage.loadData(tasks);
         while (true) {
-            chat(sc);
+            processCommand(sc);
         }
     }
 }

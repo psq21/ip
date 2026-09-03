@@ -9,6 +9,12 @@ import java.time.LocalDate;
 public class Deadline extends Task {
     protected LocalDate by;
 
+    /**
+     * Constructor of a deadline task.
+     *
+     * @param details Details of task.
+     * @param by Deadline of task.
+     */
     public Deadline(String details, String by) {
         super(details);
         this.by = fromStringFormat(by);
@@ -17,7 +23,7 @@ public class Deadline extends Task {
     @Override
     public String saveFormat() {
         return String.format("D | %d | %s | %s",
-                done ? 1 : 0,
+                isDone ? 1 : 0,
                 getDetails(),
                 toSaveDateFormat(by));
     }
