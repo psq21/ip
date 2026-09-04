@@ -20,17 +20,17 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleMark(String inp, TaskList tasks) {
+    public static String handleMark(String inp, TaskList tasks) {
         Integer idx = parseIndex(inp);
         if (idx != null) {
             if (tasks.markTask(idx)) {
-                System.out.printf("marked item %d :D%n", idx);
+                UI.rewriteData(tasks);
+                return String.format("marked item %d :D%n", idx);
             } else {
-                System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
+                return "oh...no..waaaaa *cries invalid twask nwumber....";
             }
-            UI.rewriteData(tasks);
         } else {
-            System.out.println("pls gib task no. for me to mark uwu uwu");
+            return "pls gib task no. for me to mark uwu uwu";
         }
     }
 
@@ -40,16 +40,17 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleUnmark(String inp, TaskList tasks) {
+    public static String handleUnmark(String inp, TaskList tasks) {
         Integer idx = parseIndex(inp);
         if (idx != null) {
             if (tasks.unmarkTask(idx)) {
-                System.out.printf("unmarked item %d :PPP%n", idx);
+                UI.rewriteData(tasks);
+                return String.format("unmarked item %d :PPP%n", idx);
             } else {
-                System.out.println("oh...no..waaaaa *cries invalid twask nwumber....");
+                return "oh...no..waaaaa *cries invalid twask nwumber....";
             }
-            UI.rewriteData(tasks);
         }
+        return "pls gib task no. for me to unmark uwu uwu";
     }
 
     /**
@@ -58,16 +59,16 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleTodo(String inp, TaskList tasks) {
+    public static String handleTodo(String inp, TaskList tasks) {
         String details = parseTodo(inp);
         if (details != null) {
             Task newTask = new ToDo(details);
             tasks.add(newTask);
             UI.saveData(newTask);
-            System.out.printf("watashi added the task %s !! anata have %d tasks to go!!%n",
+            return String.format("watashi added the task %s !! anata have %d tasks to go!!%n",
                     newTask, tasks.size());
         } else {
-            System.out.println("gib me something to work with !!! :(((");
+            return "gib me something to work with !!! :(((";
         }
     }
 
@@ -77,20 +78,20 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleDeadline(String inp, TaskList tasks) {
+    public static String handleDeadline(String inp, TaskList tasks) {
         String[] properties = parseDeadline(inp);
         try {
             if (properties != null) {
                 Task newTask = new Deadline(properties[0], properties[1]);
                 tasks.add(newTask);
                 UI.saveData(newTask);
-                System.out.printf("oh no scary deadlinw.... %s%n", newTask);
+                return String.format("oh no scary deadlinw.... %s%n", newTask);
             } else {
                 // if appropriate arguments are not given
-                System.out.println("no pls gib the details and the deadline");
+                return "no pls gib the details and the deadline";
             }
         } catch (Exception e) { // occurs if date is not in correct format
-            System.out.println("pwease gib by in correct format? pweety pwease? (yyyy-MM-dd)");
+            return "pwease gib by in correct format? pweety pwease? (yyyy-MM-dd)";
         }
     }
 
@@ -100,19 +101,19 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleEvent(String inp, TaskList tasks) {
+    public static String handleEvent(String inp, TaskList tasks) {
         String[] properties = parseEvent(inp);
         if (properties != null) {
             try {
                 Task newTask = new Event(properties[0], properties[1], properties[2]);
                 tasks.add(newTask);
                 UI.saveData(newTask);
-                System.out.printf("yeeeeees event %s added%n", newTask);
+                return String.format("yeeeeees event %s added%n", newTask);
             } catch (DateTimeParseException e) {
-                System.out.println("pwease gib start/end in correct format? pweety pwease? (yyyy-MM-dd)");
+                return "pwease gib start/end in correct format? pweety pwease? (yyyy-MM-dd)";
             }
         } else {
-            System.out.println("nu !!!! gimme the deets the from the to");
+            return "nu !!!! gimme the deets the from the to";
         }
     }
 
@@ -122,17 +123,17 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleDelete(String inp, TaskList tasks) {
+    public static String handleDelete(String inp, TaskList tasks) {
         Integer idx = parseIndex(inp);
         if (idx != null) {
             if (tasks.removeTask(idx)) {
-                System.out.println("!!! begone you normie!!");
                 UI.rewriteData(tasks);
+                return "!!! begone you normie!!";
             } else {
-                System.out.println("inwalid index");
+                return "inwalid index";
             }
         } else {
-            System.out.println("wub wub... no indewx....");
+            return "wub wub... no indewx....";
         }
     }
 
@@ -142,18 +143,19 @@ public class UI {
      * @param inp Command input by user.
      * @param tasks List of tasks.
      */
-    public static void handleFind(String inp, TaskList tasks) {
+    public static String handleFind(String inp, TaskList tasks) {
         String search = Parser.parseFind(inp);
+        StringBuilder res = new StringBuilder("here's all the matching stuffs :PP%n");
         if (search != null) {
-            System.out.println("here's all the matching stuffs :PP");
             for (int i = 0; i < tasks.size(); i++) {
                 Task task = tasks.get(i);
                 if (task.contains(search)) {
-                    System.out.printf("%d. %s %n", i + 1, task);
+                    res.append(String.format("%d. %s %n", i + 1, task));
                 }
             }
+            return res.toString();
         } else {
-            System.out.println("no mwatch :(");
+            return "no mwatch :(";
         }
     }
 
@@ -162,11 +164,11 @@ public class UI {
      *
      * @param task Task to be written.
      */
-    public static void saveData(Task task) {
+    public static String saveData(Task task) {
         if (Storage.saveData(task)) {
-            System.out.println("saved to dis");
+            return "saved to dis";
         } else {
-            System.out.println("Swomething went wrong when saving to disk :(((((");
+            return "Swomething went wrong when saving to disk :(((((";
         }
     }
 
@@ -176,11 +178,11 @@ public class UI {
      *
      * @param tasks List of tasks.
      */
-    public static void rewriteData(TaskList tasks) {
+    public static String rewriteData(TaskList tasks) {
         if (Storage.rewriteData(tasks)) {
-            System.out.println("saved to dis");
+            return "saved to dis";
         } else {
-            System.out.println("Swomething went wrong when saving to disk :(((((");
+            return "Swomething went wrong when saving to disk :(((((";
         }
     }
 
@@ -189,19 +191,18 @@ public class UI {
      *
      * @param tasks List to add tasks to.
      */
-    public static void loadData(TaskList tasks) {
+    public static String loadData(TaskList tasks) {
         if (Storage.loadData(tasks)) {
-            System.out.println("okiii loaded from disk :3");
+            return "okiii loaded from disk :3";
         } else {
-            System.out.println("Somethign wen weong when loding from dis");
+            return "Somethign wen weong when loding from dis";
         }
     }
 
     /**
      * Exits the program.
      */
-    public static void exit() {
-        System.out.println("gwooooooooddbyyeee seeeeee youuuuuuuu <3");
-        System.exit(0);
+    public static String exit() {
+        return "gwooooooooddbyyeee seeeeee youuuuuuuu <3";
     }
 }

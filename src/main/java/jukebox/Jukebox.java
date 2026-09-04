@@ -1,7 +1,5 @@
 package jukebox;
 
-import java.util.Scanner;
-
 /**
  * Main class for chatbot.
  */
@@ -25,11 +23,10 @@ public class Jukebox {
         }
     }
 
-    protected static void processCommand(Scanner sc) {
-        String inp = sc.nextLine();
+    public static String getResponse(String inp) {
         Action action = Action.fromInput(inp);
 
-        switch (action) {
+        return switch (action) {
             case BYE -> UI.exit();
             case LIST -> tasks.list();
             case MARK -> UI.handleMark(inp, tasks);
@@ -39,19 +36,15 @@ public class Jukebox {
             case EVENT -> UI.handleEvent(inp, tasks);
             case DELETE -> UI.handleDelete(inp, tasks);
             case FIND -> UI.handleFind(inp, tasks);
-            default -> System.out.println("eeek?? nani ??/");
-        }
+            default -> ("eeek?? nani ??/");
+        };
     }
 
     public static void main(String[] args) {
         String chatbotName = "jukebox";
-        Scanner sc = new Scanner(System.in);
         // Personality: uwu
         String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
         Storage.loadData(tasks);
-        while (true) {
-            processCommand(sc);
-        }
     }
 }
