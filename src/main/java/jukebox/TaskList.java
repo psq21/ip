@@ -22,10 +22,12 @@ public class TaskList {
     /**
      * Prints out all tasks.
      */
-    public void list() {
+    public String list() {
+        StringBuilder res = new StringBuilder("");
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, tasks.get(i));
+            res.append(String.format("%d. %s%n", i + 1, tasks.get(i)));
         }
+        return res.toString();
     }
 
     /**

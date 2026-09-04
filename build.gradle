@@ -52,7 +52,7 @@ test {
 }
 
 application {
-    mainClass = 'jukebox.Jukebox'
+    mainClass = 'Launcher'
 }
 
 jar {
