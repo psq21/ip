@@ -10,15 +10,33 @@ public class Jukebox {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN;
 
         public static Action fromInput(String inp) {
-            if (inp.equals("bye")) return BYE;
-            if (inp.equals("list")) return LIST;
-            if (inp.startsWith("mark")) return MARK;
-            if (inp.startsWith("unmark")) return UNMARK;
-            if (inp.startsWith("todo")) return TODO;
-            if (inp.startsWith("deadline")) return DEADLINE;
-            if (inp.startsWith("event")) return EVENT;
-            if (inp.startsWith("delete")) return DELETE;
-            if (inp.startsWith("find")) return FIND;
+            if (inp.equals("bye")) {
+                return BYE;
+            }
+            if (inp.equals("list")) {
+                return LIST;
+            }
+            if (inp.startsWith("mark")) {
+                return MARK;
+            }
+            if (inp.startsWith("unmark")) {
+                return UNMARK;
+            }
+            if (inp.startsWith("todo")) {
+                return TODO;
+            }
+            if (inp.startsWith("deadline")) {
+                return DEADLINE;
+            }
+            if (inp.startsWith("event")) {
+                return EVENT;
+            }
+            if (inp.startsWith("delete")) {
+                return DELETE;
+            }
+            if (inp.startsWith("find")) {
+                return FIND;
+            }
             return UNKNOWN;
         }
     }

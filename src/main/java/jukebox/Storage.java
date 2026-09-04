@@ -15,8 +15,8 @@ import java.io.BufferedReader;
  * Class to handle I/O.
  */
 public class Storage {
-    private static final String TASKDATAFOLDER = "data";
-    private static final String TASKDATAFILE = "data/tasks.txt";
+    private static final String TASK_DATA_FOLDER = "data";
+    private static final String TASK_DATA_FILE = "data/tasks.txt";
 
     /**
      * Sets up data storage file for usage.
@@ -24,14 +24,14 @@ public class Storage {
      * @throws IOException If failed to create file/directory.
      */
     public static void useTaskFile() throws IOException {
-        File dataFolder = new File(TASKDATAFOLDER);
+        File dataFolder = new File(TASK_DATA_FOLDER);
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdir()) {
                 throw new IOException();
             }
         }
 
-        File dataFile = new File(TASKDATAFILE);
+        File dataFile = new File(TASK_DATA_FILE);
         if (!dataFile.exists()) {
             if (!dataFile.createNewFile()) {
                 throw new IOException();
@@ -48,7 +48,7 @@ public class Storage {
     public static boolean saveData(Task task) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(TASKDATAFILE, true);
+            FileWriter fw = new FileWriter(TASK_DATA_FILE, true);
             fw.write(task.saveFormat() + System.lineSeparator());
             fw.close();
             return true;
@@ -67,7 +67,7 @@ public class Storage {
     public static boolean rewriteData(TaskList tasks) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(TASKDATAFILE);
+            FileWriter fw = new FileWriter(TASK_DATA_FILE);
             for (Task task : tasks.getTasks()) {
                 fw.write(task.saveFormat() + System.lineSeparator());
             }
@@ -87,7 +87,7 @@ public class Storage {
     public static boolean loadData(TaskList tasks) {
         try {
             useTaskFile();
-            File f = new File(TASKDATAFILE);
+            File f = new File(TASK_DATA_FILE);
             if (!f.exists()) {
                 if (!f.createNewFile()) {
                     return false;

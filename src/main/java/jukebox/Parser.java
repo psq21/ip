@@ -92,6 +92,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns string to search for.
+     *
+     * @param inp Command input by user.
+     * @return String to search for.
+     */
     public static String parseFind(String inp) {
         Matcher matcher = FIND_PATTERN.matcher(inp);
         if (matcher.matches()) {
