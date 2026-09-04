@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Jukebox {
     private static TaskList tasks = new TaskList();
 
-    private enum Action {
+    protected enum Action {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN;
 
         public static Action fromInput(String inp) {
@@ -25,7 +25,7 @@ public class Jukebox {
         }
     }
 
-    private static void processCommand(Scanner sc) {
+    protected static void processCommand(Scanner sc) {
         String inp = sc.nextLine();
         Action action = Action.fromInput(inp);
 
