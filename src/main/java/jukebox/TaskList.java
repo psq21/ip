@@ -3,6 +3,9 @@ package jukebox;
 import jukebox.task.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Encapsulates data and functions associated with a task list.
@@ -58,6 +61,18 @@ public class TaskList {
         return tasks;
     }
 
+    private boolean areValid(int... indices) {
+        if (indices == null || indices.length == 0) {
+            return false;
+        }
+        for (int idx : indices) {
+            if (idx < 1 || idx > tasks.size()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Marks task at given index as done.
      *
@@ -70,6 +85,22 @@ public class TaskList {
             return false;
         }
         tasks.get(idx).markDone();
+        return true;
+    }
+
+    /**
+     * Marks every task at the given indices as done.
+     *
+     * @param indices Tasks to mark done.
+     * @return Is successful.
+     */
+    public boolean markTasks(int... indices) {
+        if (!areValid(indices)) {
+            return false;
+        }
+        for (int idx : indices) {
+            tasks.get(idx - 1).markDone();
+        }
         return true;
     }
 
@@ -89,6 +120,22 @@ public class TaskList {
     }
 
     /**
+     * Marks all tasks at given indices as undone.
+     *
+     * @param indices Tasks to mark as undone.
+     * @return Is successful.
+     */
+    public boolean unmarkTasks(int... indices) {
+        if (!areValid(indices)) {
+            return false;
+        }
+        for (int idx : indices) {
+            tasks.get(idx - 1).unmarkDone();
+        }
+        return true;
+    }
+
+    /**
      * Removes task at given index from list.
      *
      * @param idx Index of task.
@@ -102,4 +149,27 @@ public class TaskList {
         tasks.remove(idx);
         return true;
     }
+
+    /**
+     * Removes tasks at the given indices.
+     *
+     * @param indices Tasks to remove.
+     * @return Is sucessful.
+     */
+    public boolean removeTasks(int... indices) {
+        if (!areValid(indices)) {
+            return false;
+        }
+        Set<Integer> uniqueIndices = new HashSet<>();
+        for (int idx : indices) {
+            uniqueIndices.add(idx - 1);
+        }
+        Integer[] sorted = uniqueIndices.toArray(new Integer[0]);
+        Arrays.sort(sorted, java.util.Comparator.reverseOrder());
+        for (int idx : sorted) {
+            tasks.remove((int) idx);
+        }
+        return true;
+    }
+
 }

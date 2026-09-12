@@ -21,11 +21,13 @@ public class UI {
      * @param tasks List of tasks.
      */
     public static String handleMark(String inp, TaskList tasks) {
-        Integer idx = parseIndex(inp);
-        if (idx != null) {
-            if (tasks.markTask(idx)) {
+        int[] indices = parseIndices(inp);
+        if (indices != null) {
+            if (tasks.markTasks(indices)) {
                 UI.rewriteData(tasks);
-                return String.format("marked item %d :D%n", idx);
+                return indices.length == 1
+                        ? String.format("marked item %d :D%n", indices[0])
+                        : "marked items :D\n";
             } else {
                 return "oh...no..waaaaa *cries invalid twask nwumber....";
             }
@@ -41,11 +43,13 @@ public class UI {
      * @param tasks List of tasks.
      */
     public static String handleUnmark(String inp, TaskList tasks) {
-        Integer idx = parseIndex(inp);
-        if (idx != null) {
-            if (tasks.unmarkTask(idx)) {
+        int[] indices = parseIndices(inp);
+        if (indices != null) {
+            if (tasks.unmarkTasks(indices)) {
                 UI.rewriteData(tasks);
-                return String.format("unmarked item %d :PPP%n", idx);
+                return indices.length == 1
+                        ? String.format("unmarked item %d :PPP%n", indices[0])
+                        : "unmarked items :PPP\n";
             } else {
                 return "oh...no..waaaaa *cries invalid twask nwumber....";
             }
@@ -124,9 +128,9 @@ public class UI {
      * @param tasks List of tasks.
      */
     public static String handleDelete(String inp, TaskList tasks) {
-        Integer idx = parseIndex(inp);
-        if (idx != null) {
-            if (tasks.removeTask(idx)) {
+        int[] indices = parseIndices(inp);
+        if (indices != null) {
+            if (tasks.removeTasks(indices)) {
                 UI.rewriteData(tasks);
                 return "!!! begone you normie!!";
             } else {

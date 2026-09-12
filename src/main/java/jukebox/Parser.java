@@ -1,6 +1,7 @@
 package jukebox;
 
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,14 +33,35 @@ public class Parser {
      * @return Index | null.
      */
     public static Integer parseIndex(String inp) {
-        Scanner s = new Scanner(inp);
-        s.next();
-        if (s.hasNextInt()) {
-            int idx = s.nextInt();
-            return idx;
-        } else {
+        int[] indices = parseIndices(inp);
+        return indices == null || indices.length != 1 ? null : indices[0];
+    }
+
+    /**
+     * Returns all integer indices passed to a command. The command must be
+     * followed by one or more whitespace-separated integers; any other token
+     * makes the whole input invalid.
+     *
+     * @param inp Command input by user.
+     * @return Indices, or null when the arguments are missing or malformed.
+     */
+    public static int[] parseIndices(String inp) {
+        if (inp == null) {
             return null;
         }
+        String[] parts = inp.trim().split("\\s+");
+        if (parts.length < 2) {
+            return null;
+        }
+        List<Integer> indices = new ArrayList<>();
+        try {
+            for (int i = 1; i < parts.length; i++) {
+                indices.add(Integer.parseInt(parts[i]));
+            }
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        return indices.stream().mapToInt(Integer::intValue).toArray();
     }
 
     /**
