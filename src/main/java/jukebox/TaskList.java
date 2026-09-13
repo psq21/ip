@@ -4,6 +4,7 @@ import jukebox.task.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -34,6 +35,12 @@ public class TaskList {
         return IntStream.range(0, tasks.size())
                 .mapToObj(i -> String.format("%d. %s%n", i + 1, tasks.get(i)))
                 .reduce("", String::concat);
+    }
+
+    /** Sorts dated tasks chronologically and keeps undated tasks at the end. */
+    public void sortByDate() {
+        tasks.sort(Comparator.comparing(Task::getSortDate,
+                Comparator.nullsLast(Comparator.naturalOrder())));
     }
 
     /**

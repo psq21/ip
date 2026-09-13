@@ -32,6 +32,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public LocalDate getSortDate() {
+        return by;
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + toOtherDateFormat(by) + ")";
     }

@@ -1,6 +1,7 @@
 package jukebox;
 
 import jukebox.task.ToDo;
+import jukebox.task.Deadline;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,5 +51,19 @@ class TaskListTest {
 
         assertTrue(tasks.removeTask(1));
         assertEquals("second", tasks.getTasks().get(0).getDetails());
+    }
+
+    @Test
+    void sortByDate_ordersDatedTasksBeforeUndatedTasks() {
+        TaskList tasks = new TaskList();
+        tasks.add(new ToDo("undated"));
+        tasks.add(new Deadline("later", "2026-12-01"));
+        tasks.add(new Deadline("earlier", "2026-01-01"));
+
+        tasks.sortByDate();
+
+        assertEquals("earlier", tasks.get(0).getDetails());
+        assertEquals("later", tasks.get(1).getDetails());
+        assertEquals("undated", tasks.get(2).getDetails());
     }
 }

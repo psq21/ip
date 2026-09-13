@@ -36,6 +36,11 @@ abstract public class Task {
         return this.details;
     }
 
+    /** Returns the date used to order this task, or null when it is undated. */
+    public LocalDate getSortDate() {
+        return null;
+    }
+
     /**
      * Checks if details contains given string.
      *
