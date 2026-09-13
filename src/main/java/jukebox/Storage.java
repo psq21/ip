@@ -122,6 +122,8 @@ public class Storage {
                         continue;
                 }
 
+                // Each recognized record must produce exactly one concrete task before insertion.
+                assert task != null : "task must be created";
                 if (isDone) {
                     task.markDone();
                 }

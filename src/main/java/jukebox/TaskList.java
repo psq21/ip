@@ -19,6 +19,8 @@ public class TaskList {
      * @param task Task to add.
      */
     public void add(Task task) {
+        // Null entries would make list(), search, and persistence fail later and obscure the cause.
+        assert task != null : "task list cannot contain null tasks";
         tasks.add(task);
     }
 
@@ -70,6 +72,8 @@ public class TaskList {
                 return false;
             }
         }
+        // All callers below convert these 1-based values to safe 0-based positions.
+        assert indices.length > 0 && Arrays.stream(indices).allMatch(i -> i >= 1 && i <= tasks.size());
         return true;
     }
 
