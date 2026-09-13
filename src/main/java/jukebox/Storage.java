@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.stream.Collectors;
 
 /**
  * Handles loading and saving tasks in the application's data file.
@@ -74,9 +75,13 @@ public class Storage {
         try {
             useTaskFile();
             FileWriter fw = new FileWriter(TASK_DATA_FILE);
-            for (Task task : tasks.getTasks()) {
-                fw.write(task.saveFormat() + System.lineSeparator());
+            String data = tasks.getTasks().stream()
+                    .map(Task::saveFormat)
+                    .collect(Collectors.joining(System.lineSeparator()));
+            if (!data.isEmpty()) {
+                data += System.lineSeparator();
             }
+            fw.write(data);
             fw.close();
             return true;
         } catch (IOException e) {

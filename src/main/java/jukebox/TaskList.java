@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  * Encapsulates data and functions associated with a task list.
@@ -30,11 +31,9 @@ public class TaskList {
      * @return Numbered string representation of all tasks.
      */
     public String list() {
-        StringBuilder res = new StringBuilder("");
-        for (int i = 0; i < tasks.size(); i++) {
-            res.append(String.format("%d. %s%n", i + 1, tasks.get(i)));
-        }
-        return res.toString();
+        return IntStream.range(0, tasks.size())
+                .mapToObj(i -> String.format("%d. %s%n", i + 1, tasks.get(i)))
+                .reduce("", String::concat);
     }
 
     /**
@@ -63,6 +62,16 @@ public class TaskList {
      */
     public ArrayList<Task> getTasks() {
         return tasks;
+    }
+
+    /**
+     * Checks whether a task with the given description exists.
+     *
+     * @param description Description to search for.
+     * @return True if a matching task exists.
+     */
+    public boolean containsTask(String description) {
+        return tasks.stream().anyMatch(task -> task.getDetails().equals(description));
     }
 
     private boolean areValid(int... indices) {
