@@ -4,37 +4,46 @@ package jukebox;
  * Main class for chatbot.
  */
 public class Jukebox {
+    private static final String BYE_COMMAND = "bye";
+    private static final String LIST_COMMAND = "list";
+    private static final String MARK_COMMAND = "mark";
+    private static final String UNMARK_COMMAND = "unmark";
+    private static final String TODO_COMMAND = "todo";
+    private static final String DEADLINE_COMMAND = "deadline";
+    private static final String EVENT_COMMAND = "event";
+    private static final String DELETE_COMMAND = "delete";
+    private static final String FIND_COMMAND = "find";
     private static TaskList tasks = new TaskList();
 
     protected enum Action {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN;
 
         public static Action fromInput(String inp) {
-            if (inp.equals("bye")) {
+            if (inp.equals(BYE_COMMAND)) {
                 return BYE;
             }
-            if (inp.equals("list")) {
+            if (inp.equals(LIST_COMMAND)) {
                 return LIST;
             }
-            if (inp.startsWith("mark")) {
+            if (inp.startsWith(MARK_COMMAND)) {
                 return MARK;
             }
-            if (inp.startsWith("unmark")) {
+            if (inp.startsWith(UNMARK_COMMAND)) {
                 return UNMARK;
             }
-            if (inp.startsWith("todo")) {
+            if (inp.startsWith(TODO_COMMAND)) {
                 return TODO;
             }
-            if (inp.startsWith("deadline")) {
+            if (inp.startsWith(DEADLINE_COMMAND)) {
                 return DEADLINE;
             }
-            if (inp.startsWith("event")) {
+            if (inp.startsWith(EVENT_COMMAND)) {
                 return EVENT;
             }
-            if (inp.startsWith("delete")) {
+            if (inp.startsWith(DELETE_COMMAND)) {
                 return DELETE;
             }
-            if (inp.startsWith("find")) {
+            if (inp.startsWith(FIND_COMMAND)) {
                 return FIND;
             }
             return UNKNOWN;

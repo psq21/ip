@@ -12,11 +12,17 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 /**
- * Class to handle I/O.
+ * Handles loading and saving tasks in the application's data file.
  */
 public class Storage {
     private static final String TASK_DATA_FOLDER = "data";
     private static final String TASK_DATA_FILE = "data/tasks.txt";
+    private static final String FIELD_SEPARATOR_REGEX = "\\s*\\|\\s*";
+    private static final String EVENT_TIME_SEPARATOR_REGEX = "\\s+to\\s+";
+    private static final String TODO_TYPE = "T";
+    private static final String DEADLINE_TYPE = "D";
+    private static final String EVENT_TYPE = "E";
+    private static final String DONE_STATUS = "1";
 
     /**
      * Sets up data storage file for usage.
@@ -97,24 +103,24 @@ public class Storage {
             BufferedReader br = new BufferedReader(new FileReader(f));
             String line;
             while ((line = br.readLine()) != null) {
-                String[] fields = line.split("\\s*\\|\\s*", -1);
+                String[] fields = line.split(FIELD_SEPARATOR_REGEX, -1);
                 if (fields.length < 3) continue;
 
                 String taskType = fields[0].trim();
-                boolean isDone = fields[1].trim().equals("1");
+                boolean isDone = fields[1].trim().equals(DONE_STATUS);
                 Task task;
 
                 switch (taskType) {
-                    case "T":
+                    case TODO_TYPE:
                         task = new ToDo(fields[2].trim());
                         break;
-                    case "D":
+                    case DEADLINE_TYPE:
                         if (fields.length < 4) continue;
                         task = new Deadline(fields[2].trim(), fields[3].trim());
                         break;
-                    case "E":
+                    case EVENT_TYPE:
                         if (fields.length < 4) continue;
-                        String[] times = fields[3].trim().split("\\s+to\\s+", 2);
+                        String[] times = fields[3].trim().split(EVENT_TIME_SEPARATOR_REGEX, 2);
                         if (times.length < 2) continue;
                         task = new Event(fields[2].trim(), times[0], times[1]);
                         break;

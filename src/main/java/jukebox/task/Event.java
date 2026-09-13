@@ -3,10 +3,11 @@ package jukebox.task;
 import java.time.LocalDate;
 
 /**
- * Event class.
- * Subclass of Task.
+ * Represents a task occurring between a start date and an end date.
  */
 public class Event extends Task {
+    private static final String SAVE_TYPE = "E";
+    private static final String TIME_SEPARATOR = " to ";
     protected LocalDate start;
     protected LocalDate end;
 
@@ -27,10 +28,12 @@ public class Event extends Task {
 
     @Override
     public String saveFormat() {
-        return String.format("E | %d | %s | %s to %s",
-                this.isDone ? 1 : 0,
+        return String.format("%s | %d | %s | %s%s%s",
+                SAVE_TYPE,
+                this.isDone ? DONE_STATUS : NOT_DONE_STATUS,
                 this.getDetails(),
                 toOtherDateFormat(start),
+                TIME_SEPARATOR,
                 toOtherDateFormat(end));
     }
 

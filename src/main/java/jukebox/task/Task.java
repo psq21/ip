@@ -5,9 +5,19 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
 /**
- * Task class.
+ * Represents a task that can be completed and persisted.
  */
 abstract public class Task {
+    /** Date format used for task persistence and command input. */
+    protected static final String DATE_FORMAT = "uuuu-MM-dd";
+
+    /** Date format used when displaying tasks to the user. */
+    protected static final String DISPLAY_DATE_FORMAT = "MMM d yyyy";
+
+    /** Integer status values used by the task persistence format. */
+    protected static final int NOT_DONE_STATUS = 0;
+    protected static final int DONE_STATUS = 1;
+
     protected boolean isDone = false;
     private String details;
 
@@ -64,7 +74,7 @@ abstract public class Task {
      * @return Formatted string.
      */
     protected String toSaveDateFormat(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
+        return date.format(DateTimeFormatter.ofPattern(DATE_FORMAT));
     }
 
     /**
@@ -74,7 +84,7 @@ abstract public class Task {
      * @return Formatted string.
      */
     protected String toOtherDateFormat(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+        return date.format(DateTimeFormatter.ofPattern(DISPLAY_DATE_FORMAT));
     }
 
     /**
@@ -86,7 +96,7 @@ abstract public class Task {
     protected LocalDate fromStringFormat(String dateString) {
         // Date strings reach this method only after a task command or save record supplies one.
         assert dateString != null && !dateString.isBlank() : "date string must be present";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMAT)
                                             .withResolverStyle(ResolverStyle.STRICT);
         return LocalDate.parse(dateString, formatter);
     }

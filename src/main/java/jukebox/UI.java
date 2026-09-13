@@ -10,7 +10,7 @@ import java.time.format.DateTimeParseException;
 import static jukebox.Parser.*;
 
 /**
- * Class to handle input by user.
+ * Handles user commands and produces responses for the user interface.
  */
 public class UI {
 
