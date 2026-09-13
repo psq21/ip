@@ -21,6 +21,8 @@ public class Event extends Task {
         super(details);
         this.start = fromStringFormat(start);
         this.end = fromStringFormat(end);
+        // Event formatting and persistence require both endpoints to exist.
+        assert this.start != null && this.end != null : "event endpoints must be parsed";
     }
 
     @Override

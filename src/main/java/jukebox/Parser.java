@@ -61,7 +61,10 @@ public class Parser {
         } catch (NumberFormatException e) {
             return null;
         }
-        return indices.stream().mapToInt(Integer::intValue).toArray();
+        int[] result = indices.stream().mapToInt(Integer::intValue).toArray();
+        // The successful parse must preserve one integer for every argument token.
+        assert result.length == parts.length - 1 : "parsed index count must match input arguments";
+        return result;
     }
 
     /**

@@ -13,6 +13,8 @@ abstract public class Task {
 
     protected Task(String details) {
         this.details = details;
+        // Every task must have searchable/displayable details; callers validate user input first.
+        assert details != null && !details.isBlank() : "task details must be non-blank";
     }
 
     /**
@@ -82,6 +84,8 @@ abstract public class Task {
      * @return LocalDate object.
      */
     protected LocalDate fromStringFormat(String dateString) {
+        // Date strings reach this method only after a task command or save record supplies one.
+        assert dateString != null && !dateString.isBlank() : "date string must be present";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
                                             .withResolverStyle(ResolverStyle.STRICT);
         return LocalDate.parse(dateString, formatter);

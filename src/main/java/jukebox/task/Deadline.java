@@ -18,6 +18,8 @@ public class Deadline extends Task {
     public Deadline(String details, String by) {
         super(details);
         this.by = fromStringFormat(by);
+        // A successfully constructed deadline always has a parsed date for formatting and saving.
+        assert this.by != null : "deadline date must be parsed";
     }
 
     @Override
