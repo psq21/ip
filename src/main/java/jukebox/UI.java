@@ -6,6 +6,7 @@ import jukebox.task.Task;
 import jukebox.task.ToDo;
 
 import java.time.format.DateTimeParseException;
+import java.util.stream.IntStream;
 
 import static jukebox.Parser.*;
 
@@ -151,12 +152,10 @@ public class UI {
         String search = Parser.parseFind(inp);
         StringBuilder res = new StringBuilder("here's all the matching stuffs :PP%n");
         if (search != null) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task task = tasks.get(i);
-                if (task.contains(search)) {
-                    res.append(String.format("%d. %s %n", i + 1, task));
-                }
-            }
+            IntStream.range(0, tasks.size())
+                    .filter(i -> tasks.get(i).contains(search))
+                    .mapToObj(i -> String.format("%d. %s %n", i + 1, tasks.get(i)))
+                    .forEach(res::append);
             return res.toString();
         } else {
             return "no mwatch :(";
