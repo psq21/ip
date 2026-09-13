@@ -162,6 +162,13 @@ public class UI {
         }
     }
 
+    /** Sorts tasks chronologically by their deadline or event start date. */
+    public static String handleSort(TaskList tasks) {
+        tasks.sortByDate();
+        rewriteData(tasks);
+        return "sorted by date :3";
+    }
+
     /**
      * Calls storage method to save a task to disk.
      *

@@ -14,6 +14,7 @@ class JukeboxTest {
         assertEquals(Jukebox.Action.TODO, Jukebox.Action.fromInput("todo task"));
         assertEquals(Jukebox.Action.DEADLINE, Jukebox.Action.fromInput("deadline task /by 2026-01-01"));
         assertEquals(Jukebox.Action.EVENT, Jukebox.Action.fromInput("event task /from 2026-01-01 /to 2026-01-02"));
+        assertEquals(Jukebox.Action.SORT, Jukebox.Action.fromInput("sort"));
         assertEquals(Jukebox.Action.DELETE, Jukebox.Action.fromInput("delete 1"));
     }
 

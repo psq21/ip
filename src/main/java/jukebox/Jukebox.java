@@ -13,10 +13,11 @@ public class Jukebox {
     private static final String EVENT_COMMAND = "event";
     private static final String DELETE_COMMAND = "delete";
     private static final String FIND_COMMAND = "find";
+    private static final String SORT_COMMAND = "sort";
     private static TaskList tasks = new TaskList();
 
     protected enum Action {
-        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, UNKNOWN;
+        BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, SORT, UNKNOWN;
 
         public static Action fromInput(String inp) {
             if (inp.equals(BYE_COMMAND)) {
@@ -46,6 +47,9 @@ public class Jukebox {
             if (inp.startsWith(FIND_COMMAND)) {
                 return FIND;
             }
+            if (inp.equals(SORT_COMMAND)) {
+                return SORT;
+            }
             return UNKNOWN;
         }
     }
@@ -63,6 +67,7 @@ public class Jukebox {
             case EVENT -> UI.handleEvent(inp, tasks);
             case DELETE -> UI.handleDelete(inp, tasks);
             case FIND -> UI.handleFind(inp, tasks);
+            case SORT -> UI.handleSort(tasks);
             default -> ("eeek?? nani ??/");
         };
     }
