@@ -5,6 +5,7 @@ package jukebox.task;
  * Subclass of Task.
  */
 public class ToDo extends Task {
+    private static final String SAVE_TYPE = "T";
 
     /**
      * Constructor of a ToDo task.
@@ -17,8 +18,9 @@ public class ToDo extends Task {
 
     @Override
     public String saveFormat() {
-        return String.format("T | %d | %s",
-                this.isDone ? 1 : 0,
+        return String.format("%s | %d | %s",
+                SAVE_TYPE,
+                this.isDone ? DONE_STATUS : NOT_DONE_STATUS,
                 this.getDetails());
     }
 

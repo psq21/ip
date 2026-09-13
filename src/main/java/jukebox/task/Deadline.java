@@ -7,6 +7,7 @@ import java.time.LocalDate;
  * Subclass of Task.
  */
 public class Deadline extends Task {
+    private static final String SAVE_TYPE = "D";
     protected LocalDate by;
 
     /**
@@ -22,8 +23,9 @@ public class Deadline extends Task {
 
     @Override
     public String saveFormat() {
-        return String.format("D | %d | %s | %s",
-                isDone ? 1 : 0,
+        return String.format("%s | %d | %s | %s",
+                SAVE_TYPE,
+                isDone ? DONE_STATUS : NOT_DONE_STATUS,
                 getDetails(),
                 toSaveDateFormat(by));
     }
