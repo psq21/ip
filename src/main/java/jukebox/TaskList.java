@@ -23,7 +23,9 @@ public class TaskList {
     }
 
     /**
-     * Prints out all tasks.
+     * Returns all tasks formatted as a numbered list.
+     *
+     * @return Numbered string representation of all tasks.
      */
     public String list() {
         StringBuilder res = new StringBuilder("");
@@ -154,7 +156,7 @@ public class TaskList {
      * Removes tasks at the given indices.
      *
      * @param indices Tasks to remove.
-     * @return Is sucessful.
+     * @return Whether the requested tasks were removed successfully.
      */
     public boolean removeTasks(int... indices) {
         if (!areValid(indices)) {

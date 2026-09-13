@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
 /**
- * Task class.
+ * Represents a task that can be completed and persisted.
  */
 abstract public class Task {
     /** Date format used for task persistence and command input. */

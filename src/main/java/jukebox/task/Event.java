@@ -3,8 +3,7 @@ package jukebox.task;
 import java.time.LocalDate;
 
 /**
- * Event class.
- * Subclass of Task.
+ * Represents a task occurring between a start date and an end date.
  */
 public class Event extends Task {
     private static final String SAVE_TYPE = "E";

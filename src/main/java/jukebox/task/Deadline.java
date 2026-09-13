@@ -3,8 +3,7 @@ package jukebox.task;
 import java.time.LocalDate;
 
 /**
- * Deadline class.
- * Subclass of Task.
+ * Represents a task that must be completed by a specified date.
  */
 public class Deadline extends Task {
     private static final String SAVE_TYPE = "D";

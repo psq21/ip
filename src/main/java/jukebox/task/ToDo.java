@@ -1,8 +1,7 @@
 package jukebox.task;
 
 /**
- * ToDo class.
- * Subclass of Task.
+ * Represents a task without a deadline or event period.
  */
 public class ToDo extends Task {
     private static final String SAVE_TYPE = "T";

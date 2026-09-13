@@ -12,7 +12,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 /**
- * Class to handle I/O.
+ * Handles loading and saving tasks in the application's data file.
  */
 public class Storage {
     private static final String TASK_DATA_FOLDER = "data";
