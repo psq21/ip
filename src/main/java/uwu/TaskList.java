@@ -1,6 +1,6 @@
-package jukebox;
+package uwu;
 
-import jukebox.task.Task;
+import uwu.task.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;

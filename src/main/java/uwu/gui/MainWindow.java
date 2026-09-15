@@ -1,4 +1,4 @@
-package jukebox.gui;
+package uwu.gui;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import jukebox.Jukebox;
+import uwu.Uwu;
 
 /**
  * Controller for the main GUI.
@@ -23,32 +23,32 @@ public class MainWindow extends AnchorPane {
     @FXML
     private Button sendButton;
 
-    private Jukebox jukebox;
+    private Uwu uwu;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.png"));
-    private Image jukeboxImage = new Image(this.getClass().getResourceAsStream("/images/uwu.png"));
+    private Image uwuImage = new Image(this.getClass().getResourceAsStream("/images/uwu.png"));
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Jukebox instance */
-    public void setJukebox(Jukebox j) {
-        jukebox = j;
+    /** Injects the Uwu instance */
+    public void setUwu(Uwu j) {
+        uwu = j;
     }
 
     /**
-     * Creates two dialog boxes, one echoing user input and the other containing Jukebox's reply and then appends them to
+     * Creates two dialog boxes, one echoing user input and the other containing Uwu's reply and then appends them to
      * the dialog container. Clears the user input after processing.
      */
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
-        String response = Jukebox.getResponse(input);
+        String response = Uwu.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getJukeboxDialog(response, jukeboxImage)
+                DialogBox.getUwuDialog(response, uwuImage)
         );
         userInput.clear();
         if (input.startsWith("bye")) {

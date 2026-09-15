@@ -1,4 +1,4 @@
-package jukebox.task;
+package uwu.task;
 
 import org.junit.jupiter.api.Test;
 

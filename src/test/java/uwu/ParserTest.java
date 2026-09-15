@@ -1,8 +1,8 @@
-package jukebox;
+package uwu;
 
 import org.junit.jupiter.api.Test;
 
-import static jukebox.Parser.*;
+import static uwu.Parser.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParserTest {
