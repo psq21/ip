@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  * Handles loading and saving tasks in the application's data file.
  */
 public class Storage {
-    private static final String TASK_DATA_FOLDER = "data";
-    private static final String TASK_DATA_FILE = "data/tasks.txt";
+    private static final String DEFAULT_TASK_DATA_FOLDER = "data";
+    private static final String STORAGE_FOLDER_PROPERTY = "uwu.storage.folder";
     private static final String FIELD_SEPARATOR_REGEX = "\\s*\\|\\s*";
     private static final String EVENT_TIME_SEPARATOR_REGEX = "\\s+to\\s+";
     private static final String TODO_TYPE = "T";
@@ -25,20 +25,28 @@ public class Storage {
     private static final String EVENT_TYPE = "E";
     private static final String DONE_STATUS = "1";
 
+    private static File taskDataFolder() {
+        return new File(System.getProperty(STORAGE_FOLDER_PROPERTY, DEFAULT_TASK_DATA_FOLDER));
+    }
+
+    private static File taskDataFile() {
+        return new File(taskDataFolder(), "tasks.txt");
+    }
+
     /**
      * Sets up data storage file for usage.
      *
      * @throws IOException If failed to create file/directory.
      */
     public static void useTaskFile() throws IOException {
-        File dataFolder = new File(TASK_DATA_FOLDER);
+        File dataFolder = taskDataFolder();
         if (!dataFolder.exists()) {
             if (!dataFolder.mkdir()) {
                 throw new IOException();
             }
         }
 
-        File dataFile = new File(TASK_DATA_FILE);
+        File dataFile = taskDataFile();
         if (!dataFile.exists()) {
             if (!dataFile.createNewFile()) {
                 throw new IOException();
@@ -55,7 +63,7 @@ public class Storage {
     public static boolean saveData(Task task) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(TASK_DATA_FILE, true);
+            FileWriter fw = new FileWriter(taskDataFile(), true);
             fw.write(task.saveFormat() + System.lineSeparator());
             fw.close();
             return true;
@@ -74,7 +82,7 @@ public class Storage {
     public static boolean rewriteData(TaskList tasks) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(TASK_DATA_FILE);
+            FileWriter fw = new FileWriter(taskDataFile());
             String data = tasks.getTasks().stream()
                     .map(Task::saveFormat)
                     .collect(Collectors.joining(System.lineSeparator()));
@@ -98,7 +106,7 @@ public class Storage {
     public static boolean loadData(TaskList tasks) {
         try {
             useTaskFile();
-            File f = new File(TASK_DATA_FILE);
+            File f = taskDataFile();
             if (!f.exists()) {
                 if (!f.createNewFile()) {
                     return false;
