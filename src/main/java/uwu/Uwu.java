@@ -74,6 +74,15 @@ public class Uwu {
 
     public static void main(String[] args) {
         String chatbotName = "uwu";
+        /*
+        What is uwu? uwu also stylized UwU, is an emoticon representing a cute face.
+
+        The "uwu" archetype is a prominent internet subculture and character trope
+        rooted in cute, soft, and overly expressive aesthetics.
+
+        Generally, replacing the letter 'r' with a 'w' to sound more cute is associated
+        with this archetype.
+         */
         String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
         Storage.loadData(tasks);
