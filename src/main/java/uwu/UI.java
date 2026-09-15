@@ -1,14 +1,14 @@
-package jukebox;
+package uwu;
 
-import jukebox.task.Deadline;
-import jukebox.task.Event;
-import jukebox.task.Task;
-import jukebox.task.ToDo;
+import uwu.task.Deadline;
+import uwu.task.Event;
+import uwu.task.Task;
+import uwu.task.ToDo;
 
 import java.time.format.DateTimeParseException;
 import java.util.stream.IntStream;
 
-import static jukebox.Parser.*;
+import static uwu.Parser.*;
 
 /**
  * Handles user commands and produces responses for the user interface.

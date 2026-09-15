@@ -1,4 +1,4 @@
-package jukebox.gui;
+package uwu.gui;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,7 +52,7 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getJukeboxDialog(String text, Image img) {
+    public static DialogBox getUwuDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

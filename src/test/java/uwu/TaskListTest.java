@@ -1,7 +1,7 @@
-package jukebox;
+package uwu;
 
-import jukebox.task.ToDo;
-import jukebox.task.Deadline;
+import uwu.task.ToDo;
+import uwu.task.Deadline;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
