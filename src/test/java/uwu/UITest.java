@@ -35,19 +35,19 @@ public class UITest {
 
     @Test
     void handleTodo_validInput() {
-        UI.handleTodo("todo buy milk", tasks);
+        String response = UI.handleTodo("todo buy milk", tasks);
 
         assertEquals(1, tasks.size());
         assertEquals("buy milk", tasks.getTasks().get(0).getDetails());
-        assertTrue(output.toString().contains("buy milk"));
+        assertTrue(response.contains("buy milk"));
     }
 
     @Test
     void handleTodo_invalidInput() {
-        UI.handleTodo("todo", tasks);
+        String response = UI.handleTodo("todo", tasks);
 
         assertEquals(0, tasks.size());
-        assertTrue(output.toString().contains("gib me something"));
+        assertTrue(response.contains("gib me something"));
     }
 
     @Test
@@ -61,10 +61,10 @@ public class UITest {
 
     @Test
     void handleDeadline_invalidInput() {
-        UI.handleDeadline("deadline submit report /by tomorrow", tasks);
+        String response = UI.handleDeadline("deadline submit report /by tomorrow", tasks);
 
         assertEquals(0, tasks.size());
-        assertTrue(output.toString().contains("yyyy-MM-dd"));
+        assertTrue(response.contains("yyyy-MM-dd"));
     }
 
     @Test
@@ -78,40 +78,40 @@ public class UITest {
 
     @Test
     void handleEvent_invalidInput() {
-        UI.handleEvent("event meeting /from 2026-09-01", tasks);
+        String response = UI.handleEvent("event meeting /from 2026-09-01", tasks);
 
         assertEquals(0, tasks.size());
-        assertTrue(output.toString().contains("gimme the deets"));
+        assertTrue(response.contains("gimme the deets"));
     }
 
     @Test
     void handleMark_validIndex() {
         tasks.add(new ToDo("buy milk"));
 
-        UI.handleMark("mark 1", tasks);
+        String response = UI.handleMark("mark 1", tasks);
 
         assertEquals("[T][X] buy milk", tasks.getTasks().get(0).toString());
-        assertTrue(output.toString().contains("marked item 1"));
+        assertTrue(response.contains("marked item 1"));
     }
 
     @Test
     void handleMark_invalidIndex() {
         tasks.add(new ToDo("buy milk"));
 
-        UI.handleMark("mark 2", tasks);
+        String response = UI.handleMark("mark 2", tasks);
 
         assertEquals("[T][ ] buy milk", tasks.getTasks().get(0).toString());
-        assertTrue(output.toString().contains("invalid"));
+        assertTrue(response.contains("invalid"));
     }
 
     @Test
     void handleMark_nonNumericIndex() {
         tasks.add(new ToDo("buy milk"));
 
-        UI.handleMark("mark abc", tasks);
+        String response = UI.handleMark("mark abc", tasks);
 
         assertEquals("[T][ ] buy milk", tasks.getTasks().get(0).toString());
-        assertTrue(output.toString().contains("task no."));
+        assertTrue(response.contains("task no."));
     }
 
     @Test
@@ -140,20 +140,20 @@ public class UITest {
     void handleDelete_invalidIndex() {
         tasks.add(new ToDo("first"));
 
-        UI.handleDelete("delete 2", tasks);
+        String response = UI.handleDelete("delete 2", tasks);
 
         assertEquals(1, tasks.size());
-        assertTrue(output.toString().contains("inwalid index"));
+        assertTrue(response.contains("inwalid index"));
     }
 
     @Test
     void handleDelete_nonNumericIndex() {
         tasks.add(new ToDo("first"));
 
-        UI.handleDelete("delete abc", tasks);
+        String response = UI.handleDelete("delete abc", tasks);
 
         assertEquals(1, tasks.size());
-        assertTrue(output.toString().contains("no indewx"));
+        assertTrue(response.contains("no indewx"));
     }
 
     @Test
@@ -161,8 +161,6 @@ public class UITest {
         tasks.add(new ToDo("first"));
         tasks.add(new ToDo("second"));
 
-        tasks.list();
-
-        assertEquals("1. [T][ ] first\n2. [T][ ] second\n", output.toString());
+        assertEquals("1. [T][ ] first\n2. [T][ ] second\n", tasks.list());
     }
 }
