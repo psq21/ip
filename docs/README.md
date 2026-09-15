@@ -1,4 +1,4 @@
-# jukebox.Jukebox User Guide
+# uwu.Uwu User Guide
 
 // Update the title above to match the actual product name
 

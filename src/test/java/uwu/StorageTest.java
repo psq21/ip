@@ -1,4 +1,4 @@
-package jukebox;
+package uwu;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

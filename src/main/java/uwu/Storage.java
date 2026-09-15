@@ -1,9 +1,9 @@
-package jukebox;
+package uwu;
 
-import jukebox.task.Deadline;
-import jukebox.task.Event;
-import jukebox.task.Task;
-import jukebox.task.ToDo;
+import uwu.task.Deadline;
+import uwu.task.Event;
+import uwu.task.Task;
+import uwu.task.ToDo;
 
 import java.io.IOException;
 import java.io.File;

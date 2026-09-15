@@ -1,8 +1,8 @@
-package jukebox;
+package uwu;
 
-import jukebox.task.Deadline;
-import jukebox.task.Event;
-import jukebox.task.ToDo;
+import uwu.task.Deadline;
+import uwu.task.Event;
+import uwu.task.ToDo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
