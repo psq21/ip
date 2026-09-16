@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -162,5 +163,16 @@ public class UITest {
         tasks.add(new ToDo("second"));
 
         assertEquals("1. [T][ ] first\n2. [T][ ] second\n", tasks.list());
+    }
+
+    @Test
+    void handleFind_validInputWithTrailingSpace() {
+        tasks.add(new ToDo("buy milk"));
+        tasks.add(new ToDo("read book"));
+
+        String response = UI.handleFind("find milk ", tasks);
+
+        assertTrue(response.contains("buy milk"));
+        assertFalse(response.contains("read book"));
     }
 }

@@ -70,7 +70,7 @@ public class UI {
             Task newTask = new ToDo(details);
             tasks.add(newTask);
             UI.saveData(newTask);
-            return String.format("watashi added the task %s !! anata have %d tasks to go!!%n",
+            return String.format("watashi added the task %s !!",
                     newTask, tasks.size());
         } else {
             return "gib me something to work with !!! :(((";
@@ -150,7 +150,7 @@ public class UI {
      */
     public static String handleFind(String inp, TaskList tasks) {
         String search = Parser.parseFind(inp);
-        StringBuilder res = new StringBuilder("here's all the matching stuffs :PP%n");
+        StringBuilder res = new StringBuilder("here's all the matching stuffs :PP\n");
         if (search != null) {
             IntStream.range(0, tasks.size())
                     .filter(i -> tasks.get(i).contains(search))

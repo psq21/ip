@@ -126,7 +126,7 @@ public class Parser {
     public static String parseFind(String inp) {
         Matcher matcher = FIND_PATTERN.matcher(inp);
         if (matcher.matches()) {
-            return matcher.group(1);
+            return matcher.group(1).trim();
         } else {
             return null;
         }
