@@ -16,6 +16,15 @@ public class Uwu {
     private static final String SORT_COMMAND = "sort";
     private static TaskList tasks = new TaskList();
 
+    /**
+     * Creates the chatbot and loads the persisted tasks before the UI is shown.
+     * This is needed because the JavaFX entry point constructs {@code Uwu}
+     * directly instead of invoking this class's command-line {@code main}.
+     */
+    public Uwu() {
+        Storage.loadData(tasks);
+    }
+
     protected enum Action {
         BYE, LIST, MARK, UNMARK, TODO, DEADLINE, EVENT, DELETE, FIND, SORT, UNKNOWN;
 
@@ -85,6 +94,5 @@ public class Uwu {
          */
         String greeting = String.format("Hoi hoi im %s nice to meet you :333", chatbotName);
         System.out.println(greeting);
-        Storage.loadData(tasks);
     }
 }
