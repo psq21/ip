@@ -63,7 +63,7 @@ jar {
 }
 
 shadowJar {
-    archiveFileName = 'jukebox.jar'
+    archiveFileName = 'uwu.jar'
 }
 
 run {
