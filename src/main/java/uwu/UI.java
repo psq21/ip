@@ -27,7 +27,7 @@ public class UI {
             if (tasks.markTasks(indices)) {
                 UI.rewriteData(tasks);
                 return indices.length == 1
-                        ? String.format("marked item %d :D%n", indices[0])
+                        ? String.format("marked item %d :D\n", indices[0])
                         : "marked items :D\n";
             } else {
                 return "oh...no..waaaaa *cries invalid twask nwumber....";
@@ -49,7 +49,7 @@ public class UI {
             if (tasks.unmarkTasks(indices)) {
                 UI.rewriteData(tasks);
                 return indices.length == 1
-                        ? String.format("unmarked item %d :PPP%n", indices[0])
+                        ? String.format("unmarked item %d :PPP\n", indices[0])
                         : "unmarked items :PPP\n";
             } else {
                 return "oh...no..waaaaa *cries invalid twask nwumber....";
@@ -90,7 +90,7 @@ public class UI {
                 Task newTask = new Deadline(properties[0], properties[1]);
                 tasks.add(newTask);
                 UI.saveData(newTask);
-                return String.format("oh no scary deadlinw.... %s%n", newTask);
+                return String.format("oh no scary deadlinw.... %s\n", newTask);
             } else {
                 // if appropriate arguments are not given
                 return "no pls gib the details and the deadline";
@@ -113,7 +113,7 @@ public class UI {
                 Task newTask = new Event(properties[0], properties[1], properties[2]);
                 tasks.add(newTask);
                 UI.saveData(newTask);
-                return String.format("yeeeeees event %s added%n", newTask);
+                return String.format("yeeeeees event %s added\n", newTask);
             } catch (DateTimeParseException e) {
                 return "pwease gib start/end in correct format? pweety pwease? (yyyy-MM-dd)";
             }
@@ -154,7 +154,7 @@ public class UI {
         if (search != null) {
             IntStream.range(0, tasks.size())
                     .filter(i -> tasks.get(i).contains(search))
-                    .mapToObj(i -> String.format("%d. %s %n", i + 1, tasks.get(i)))
+                    .mapToObj(i -> String.format("%d. %s \n", i + 1, tasks.get(i)))
                     .forEach(res::append);
             return res.toString();
         } else {

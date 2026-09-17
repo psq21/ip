@@ -63,9 +63,10 @@ public class Storage {
     public static boolean saveData(Task task) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(taskDataFile(), true);
-            fw.write(task.saveFormat() + System.lineSeparator());
-            fw.close();
+            try (FileWriter fw = new FileWriter(taskDataFile(), true)) {
+                // The task file format uses a stable newline across operating systems.
+                fw.write(task.saveFormat() + "\n");
+            }
             return true;
         } catch (IOException e) {
             return false;
@@ -82,15 +83,15 @@ public class Storage {
     public static boolean rewriteData(TaskList tasks) {
         try {
             useTaskFile();
-            FileWriter fw = new FileWriter(taskDataFile());
             String data = tasks.getTasks().stream()
                     .map(Task::saveFormat)
-                    .collect(Collectors.joining(System.lineSeparator()));
+                    .collect(Collectors.joining("\n"));
             if (!data.isEmpty()) {
-                data += System.lineSeparator();
+                data += "\n";
             }
-            fw.write(data);
-            fw.close();
+            try (FileWriter fw = new FileWriter(taskDataFile())) {
+                fw.write(data);
+            }
             return true;
         } catch (IOException e) {
             return false;
@@ -113,9 +114,9 @@ public class Storage {
                 }
             }
 
-            BufferedReader br = new BufferedReader(new FileReader(f));
-            String line;
-            while ((line = br.readLine()) != null) {
+            try (BufferedReader br = new BufferedReader(new FileReader(f))) {
+                String line;
+                while ((line = br.readLine()) != null) {
                 String[] fields = line.split(FIELD_SEPARATOR_REGEX, -1);
                 if (fields.length < 3) continue;
 
@@ -146,7 +147,8 @@ public class Storage {
                 if (isDone) {
                     task.markDone();
                 }
-                tasks.add(task);
+                    tasks.add(task);
+                }
             }
             return true;
 
