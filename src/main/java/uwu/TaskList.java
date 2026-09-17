@@ -33,7 +33,8 @@ public class TaskList {
      */
     public String list() {
         return IntStream.range(0, tasks.size())
-                .mapToObj(i -> String.format("%d. %s%n", i + 1, tasks.get(i)))
+                // Command output uses a stable newline so its format is identical on every OS.
+                .mapToObj(i -> String.format("%d. %s\n", i + 1, tasks.get(i)))
                 .reduce("", String::concat);
     }
 
