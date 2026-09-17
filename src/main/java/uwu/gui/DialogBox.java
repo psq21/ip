@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.text.TextAlignment;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -34,8 +35,9 @@ public class DialogBox extends HBox {
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
+            setAlignment(Pos.TOP_RIGHT);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Unable to load the dialog box layout", e);
         }
 
         dialog.setText(text);
@@ -53,7 +55,11 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        // Align both single-line and wrapped user text to the right edge of its label.
+        db.dialog.setAlignment(Pos.CENTER_RIGHT);
+        db.dialog.setTextAlignment(TextAlignment.RIGHT);
+        return db;
     }
 
     public static DialogBox getUwuDialog(String text, Image img) {
