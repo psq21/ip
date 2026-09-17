@@ -9,19 +9,15 @@ import java.util.regex.Pattern;
  * Class to extract data from commands.
  */
 public class Parser {
-    // to do {details}
     private static final Pattern TODO_PATTERN =
             Pattern.compile("^todo\\s+(.+)$");
 
-    // find {string}
     private static final Pattern FIND_PATTERN =
             Pattern.compile("^find\\s+(.+)$");
 
-    // deadline {details} /by {string}
     private static final Pattern DEADLINE_PATTERN =
             Pattern.compile("^deadline\\s+(.+?)\\s+/by\\s+(.+)$");
 
-    // event {details} /from {string} /to {string}
     private static final Pattern EVENT_PATTERN =
             Pattern.compile("^event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)$");
 
