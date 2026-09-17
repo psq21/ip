@@ -1,6 +1,6 @@
 # UwU User Guide
 
-![Product screenshot](UI.png)
+![Product screenshot](Ui.png)
 
 UwU helps you manage all your tasks, helping you keep track of 
 what you need to do and where you need to go. You can easily keep 
