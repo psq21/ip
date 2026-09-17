@@ -48,6 +48,7 @@ watashi added the task buy milk !!
 Add tasks that have a start and end date.
 
 **Format**: `event {task name} /from {start_date} /to {end_date} `
+- Start and end must be in yyyy-MM-dd format
 
 **Example**: `event japan holiday /from 2026-10-10 /to 2026-12-12`
 
@@ -146,6 +147,6 @@ unmarked items :PPP
 
 ## Exit program
 
-Exits the application
+Exits the application.
 
 **Format**: `bye`
