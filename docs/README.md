@@ -1,13 +1,21 @@
 # UwU User Guide
 
-![Product screenshot](Ui.png)
 
 UwU helps you manage all your tasks, helping you keep track of 
 what you need to do and where you need to go. You can easily keep 
 track of whether the task is complete or not.
 Comes with a funny personality :)
 
-## Adding deadlines
+![Product screenshot](Ui.png)
+
+## Quick start
+1. Ensure that Java 25 is installed on your computer.
+2. Download the latest `.jar` file from [here](https://github.com/psq21/ip/releases/latest).
+3. Use `java -jar uwu.jar` in the same folder to run the chatbot.
+
+## Features
+
+### Adding deadlines
 
 Add tasks that have deadlines attached to them.
 
@@ -26,7 +34,7 @@ Expected output:
 oh no scary deadlinw.... math assignment
 ```
 
-## Adding todos
+### Adding todos
 
 Add tasks that have no deadlines. 
 
@@ -43,7 +51,7 @@ watashi added the task buy milk !!
 ```
 
 
-## Adding events
+### Adding events
 
 Add tasks that have a start and end date.
 
@@ -61,7 +69,7 @@ Expected output:
 yeeeeees event japan holiday added
 ```
 
-## Listing tasks
+### Listing tasks
 
 Show all tasks in your task list.
 
@@ -74,7 +82,7 @@ Show all tasks in your task list.
 2. [D][ ] submit report (by: Sep 1 2026)
 ```
 
-## Deleting tasks
+### Deleting tasks
 
 Delete tasks at the given indices from the task list.
 
@@ -89,7 +97,7 @@ Expected output:
 !!! begone you normie!!
 ```
 
-## Finding tasks
+### Finding tasks
 
 Search for a task with a specific keyword.
 
@@ -104,7 +112,7 @@ here's all the matching stuffs :PP
 1. [T][X] buy milk
 ```
 
-## Sorting tasks
+### Sorting tasks
 
 Sorts tasks by date (deadline or event start date) in 
 chronological order.
@@ -117,7 +125,7 @@ chronological order.
 sorted by date :3
 ```
 
-## Mark tasks
+### Mark tasks
 
 Marks tasks at the given indices as done.
 
@@ -131,7 +139,7 @@ Expected output:
 marked item 1 :D
 ```
 
-## Unmark tasks
+### Unmark tasks
 
 Marks tasks at the given indices as undone.
 
@@ -145,7 +153,7 @@ Expected output:
 unmarked items :PPP
 ```
 
-## Exit program
+### Exit program
 
 Exits the application.
 
